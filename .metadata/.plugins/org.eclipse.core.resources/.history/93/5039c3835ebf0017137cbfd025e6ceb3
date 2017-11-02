@@ -1,0 +1,9 @@
+package daa38;
+
+import java.util.ArrayList;
+
+public class Constraint {
+	public Variable mVariable1;
+	public Variable mVariable2;
+	public ArrayList<PairInts> mValues;
+}

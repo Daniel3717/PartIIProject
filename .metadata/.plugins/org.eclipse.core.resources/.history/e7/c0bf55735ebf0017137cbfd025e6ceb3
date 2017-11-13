@@ -1,9 +1,0 @@
-package daa38;
-
-import java.util.ArrayList;
-
-public class Variable {
-	public ArrayList<Integer> mDomain;
-	public int mValue;
-	public ArrayList<Constraint> mConstraints;
-}

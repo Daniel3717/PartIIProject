@@ -1,0 +1,11 @@
+package daa38;
+
+public class VariableRestrictions {
+	Variable mVariable;
+	Collection<Integer> mImpossibleValues;
+	
+	public VariableRestrictions()
+	{
+		mVariable=null;
+	}
+}

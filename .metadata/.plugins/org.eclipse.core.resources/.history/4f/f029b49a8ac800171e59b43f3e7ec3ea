@@ -1,0 +1,5 @@
+package daa38;
+
+public interface VariableOrdering {
+
+}

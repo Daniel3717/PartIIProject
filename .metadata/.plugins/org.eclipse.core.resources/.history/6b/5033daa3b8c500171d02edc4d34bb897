@@ -1,0 +1,13 @@
+package daa38;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class StepFrame {
+	HashMap<Variable, StepFrame> mAssVars;
+	ArrayList<Variable> mVarToAss;
+	int mCurVar;
+	ArrayList<Integer> mValToAss;
+	ArrayList<VariableRestrictions> mRes;
+	int mCurVal;
+}

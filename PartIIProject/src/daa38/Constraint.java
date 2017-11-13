@@ -13,4 +13,5 @@ public class Constraint {
 		mVariable2 = new Variable();
 		mValues = new ArrayList<PairInts>();
 	}
+	
 }

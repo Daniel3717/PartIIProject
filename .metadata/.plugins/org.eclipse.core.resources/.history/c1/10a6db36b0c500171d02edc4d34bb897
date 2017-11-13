@@ -1,0 +1,25 @@
+package daa38;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+
+public class VariablesContainer {
+	
+	ArrayList<Variable> mContainer1;
+	HashSet<Variable> mContainer2;
+	
+	public VariablesContainer()
+	{
+		mContainer1 = new ArrayList<Variable>
+	}
+	
+	public void AddVariable(Variable pVar)
+	{
+		mContainer1.add(pVar);
+	}
+	
+	public void DeleteVariable(Variable pVar)
+	{
+		mContainer2.remove
+	}
+}

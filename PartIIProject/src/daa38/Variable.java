@@ -1,18 +1,21 @@
 package daa38;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 
 public class Variable {
-	public int mName;
-	public ArrayList<Integer> mDomain;
+	public int mIndex;
+	public Collection<Integer> mDomain;
 	public int mValue;
-	public ArrayList<Constraint> mConstraints;
+	public Collection<Constraint> mConstraints;
 	
 	public Variable()
 	{
-		mName = 0;
-		mDomain = new ArrayList<Integer>();
+		mIndex = 0;
+		mDomain = new HashSet<Integer>();
 		mValue = 0;
 		mConstraints = new ArrayList<Constraint>();
 	}
+	
 }

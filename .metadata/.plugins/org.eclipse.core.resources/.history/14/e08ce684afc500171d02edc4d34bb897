@@ -1,0 +1,11 @@
+package daa38;
+
+public class VariablesContainer {
+	
+	ArrayList<Variable> mContainer;
+	
+	public VariablesContainer()
+	{
+		
+	}
+}

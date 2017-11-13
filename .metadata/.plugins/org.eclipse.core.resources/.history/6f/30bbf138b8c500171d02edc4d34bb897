@@ -1,0 +1,11 @@
+package daa38;
+
+import java.util.ArrayList;
+
+public class StepFrame {
+	ArrayList<Variable> mAssVarOrder;
+	int mCurVar;
+	ArrayList<Integer> mVal;
+	ArrayList<VariableRestrictions> mRes;
+	int mCurVal;
+}

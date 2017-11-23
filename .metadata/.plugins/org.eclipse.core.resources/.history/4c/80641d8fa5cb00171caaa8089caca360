@@ -1,0 +1,21 @@
+package daa38;
+
+import java.util.ArrayList;
+
+public class Backtrack implements LookBack {
+
+	@Override
+	public void process(ArrayList<StepFrame> pStack) {
+		StepFrame lastFrame = pStack.remove(pStack.size()-1);
+		if (lastFrame.mNowValIndex<0)
+		{
+			System.out.println("DEBUGGING!");
+			lastFrame.outputFrame();
+		}
+		lastFrame.mRes.get(lastFrame.mNowValIndex).liftRestrictions();
+		StepFrame currentFrame = pStack.get(pStack.size()-1);
+		currentFrame.mVarsToGo.get(currentFrame.mNowVarIndex).mValue = -1;
+		currentFrame.mNowValIndex++;
+	}
+
+}

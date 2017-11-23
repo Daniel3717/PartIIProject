@@ -2,6 +2,9 @@ package daa38;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -79,5 +82,17 @@ public class FileHandler {
 		}
 		
 		lAssignmentInput.close();
+	}
+	
+	public static void writeFileAssignment(String pPath, ArrayList<Variable> pVariables) throws IOException
+	{
+		Writer lProblemOutput = new FileWriter(new File(pPath));
+		
+		for (Variable lV : pVariables)
+		{
+			lProblemOutput.write(lV.mValue+"\r\n");
+		}
+		
+		lProblemOutput.close();
 	}
 }

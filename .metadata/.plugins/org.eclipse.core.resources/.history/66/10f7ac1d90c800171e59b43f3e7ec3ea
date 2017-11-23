@@ -1,0 +1,11 @@
+package daa38;
+
+public class ConsistentAssignmentValueSelection implements ValueSelection {
+
+	@Override
+	public void process(StepFrame pSF) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

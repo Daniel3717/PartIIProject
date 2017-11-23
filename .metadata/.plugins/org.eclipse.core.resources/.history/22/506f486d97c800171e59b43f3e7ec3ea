@@ -1,0 +1,11 @@
+package daa38;
+
+
+public class RandomVariableOrdering implements VariableOrdering {
+
+	@Override
+	public void process(StepFrame pSF) {
+		
+	}
+
+}

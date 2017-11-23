@@ -1,0 +1,23 @@
+package daa38;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class StepFrame {
+	public HashMap<Variable, StepFrame> mExVars; //Variables assigned before this frame
+	public ArrayList<Variable> mVarsToAss; //Variables to go through during this frame
+	public int mCurVar; //Current variable
+	public ArrayList<Integer> mValsToAss; //Values that can be used for current variable
+	public ArrayList<VariableRestrictions> mRes; //Restrictions imposed on other variables due to value at same index
+	public int mCurVal; //Current value
+
+	public StepFrame()
+	{
+		mExVars = new HashMap<Variable, StepFrame>();
+		mVarsToAss = new ArrayList<Variable>();
+		mCurVar = -1;
+		mValsToAss = new ArrayList<Integer>();
+		mRes = new ArrayList<VariableRestrictions>();
+		mCurVal = -1;
+	}
+}

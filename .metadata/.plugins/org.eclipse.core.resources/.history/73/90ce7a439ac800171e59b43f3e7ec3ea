@@ -1,0 +1,13 @@
+package daa38;
+
+import java.util.Collection;
+import java.util.HashMap;
+
+public class VariablesRestrictions {
+	public HashMap<Variable, Collection<Integer> > lVRs;
+	
+	public VariablesRestrictions()
+	{
+		lVRs = new HashMap<Variable, Collection<Integer> >();
+	}
+}

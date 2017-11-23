@@ -1,0 +1,13 @@
+package daa38;
+
+import java.util.ArrayList;
+
+public class Backtrack implements LookBack {
+
+	@Override
+	public void process(ArrayList<StepFrame> pStack) {
+		StepFrame lastFrame = pStack.remove(pStack.size()-1);
+		Solver.liftRestrictions(lastFrame.mRes.get(lastFrame.mNowValIndex));
+	}
+
+}

@@ -46,7 +46,7 @@ public class Validator {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		Validator lV = new Validator("3_problem.txt","3_solution.txt");
+		Validator lV = new Validator("1_problem.txt","1_solution.txt");
 		System.out.println(lV.check());
 	}
 

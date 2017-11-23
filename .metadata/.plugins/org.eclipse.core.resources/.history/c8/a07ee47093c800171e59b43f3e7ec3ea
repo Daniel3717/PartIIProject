@@ -1,0 +1,13 @@
+package daa38;
+
+import java.util.ArrayList;
+
+public class Backtrack implements LookBack {
+
+	@Override
+	public void process(ArrayList<StepFrame> pStack) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

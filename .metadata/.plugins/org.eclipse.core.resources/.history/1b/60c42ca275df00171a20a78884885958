@@ -1,0 +1,47 @@
+package daa38.MapColoring;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class MapColoring {
+
+	public int[][] generateMap(int pZones, int pSize)
+	{
+		int[][] lMap = new int[pSize][pSize];
+		
+		for (int lRow = 0; lRow<pSize; lRow++)
+		{
+			for (int lCol = 0; lCol<pSize; lCol++)
+			{
+				lMap[lRow][lCol]=0;
+			}
+		}
+		
+		class Position
+		{
+			int row,col;
+		}
+		
+		class Forest
+		{
+			ArrayList<Position> mNext;
+			int mIndex;
+			
+			public Forest(Position mStart)
+			{
+				
+			}
+		}
+		
+		
+		
+		
+		
+		return lMap;
+	}
+	
+	public static void main(String[] args) throws IOException {
+
+		
+	}
+}

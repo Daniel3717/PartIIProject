@@ -1,0 +1,40 @@
+package daa38.MapColoring;
+
+import java.io.IOException;
+
+public class MapColoring {
+
+	public int[][] generateMap(int pZones, int pWidth)
+	{
+		int lSize = (int) Math.ceil(Math.sqrt(pZones));
+		int[][] lMap = new int[lSize][lSize];
+		
+		for (int lRow = 0; lRow<lSize; lRow++)
+		{
+			for (int lCol = 0; lCol<lSize; lCol++)
+			{
+				lMap[lRow][lCol]=0;
+			}
+		}
+		
+		int lBusyZones = pZones;
+		int lFreeZones = lSize*lSize - lBusyZones;
+		int lTargetSize = lSize*lSize / pZones;
+		
+		class Forest
+		{
+			
+		}
+		
+		
+		
+		
+		
+		return lMap;
+	}
+	
+	public static void main(String[] args) throws IOException {
+
+		
+	}
+}

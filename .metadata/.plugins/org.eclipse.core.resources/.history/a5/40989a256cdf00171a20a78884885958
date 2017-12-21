@@ -1,0 +1,9 @@
+package daa38.MapColoring;
+
+public class MapColoring {
+
+	public void generateMap()
+	{
+		
+	}
+}

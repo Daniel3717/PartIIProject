@@ -1,0 +1,16 @@
+package daa38.MapColoring;
+
+import java.io.IOException;
+
+public class MapColoring {
+
+	public void generateMap(int pZones, int pWidth, int[][] pMap)
+	{
+		
+	}
+	
+	public static void main(String[] args) throws IOException {
+
+		
+	}
+}

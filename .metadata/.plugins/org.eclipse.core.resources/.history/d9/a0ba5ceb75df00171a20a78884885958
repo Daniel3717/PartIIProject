@@ -1,0 +1,17 @@
+package daa38.MapColoring;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class MapColoring {
+
+	public int[][] generateMap(int pZones, int pSize)
+	{
+		return ForestMapGenerator.generateMap(pZones, pSize);
+	}
+	
+	public static void main(String[] args) throws IOException {
+
+		
+	}
+}

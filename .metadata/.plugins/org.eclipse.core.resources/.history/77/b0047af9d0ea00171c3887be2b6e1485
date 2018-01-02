@@ -1,0 +1,248 @@
+package daa38.MapColouring.Main;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
+import daa38.CSP.Auxiliary.Constraint;
+import daa38.CSP.Auxiliary.PairInts;
+import daa38.CSP.Auxiliary.Variable;
+import daa38.CSP.Main.CSPFileHandler;
+import daa38.CSP.Main.Solver;
+import daa38.MapColouring.Auxiliary.IntMatrixElement;
+import daa38.MapColouring.Auxiliary.MatrixPosition;
+import daa38.MapColouring.MapGenerators.ForestMapGenerator;
+
+public class MapColouring {
+	
+	
+	private final static ArrayList<Integer> DOMAIN = new ArrayList<Integer>(Arrays.asList(0,1,2,3));
+
+	public static int[][] generateMap(int pNrZones, int pSize)
+	{
+		return ForestMapGenerator.generateMap(pNrZones, pSize);
+	}
+	
+	public static void mapToCSP(int[][] pMap, Collection<Variable> pVars, Collection<Constraint> pCons)
+	{
+		pVars.clear();
+		pCons.clear();
+		
+		Map< Integer, Collection<Integer> > lNeigh = new HashMap< Integer, Collection<Integer> >();
+		
+		for (int lRow = 0; lRow < pMap.length; lRow++)
+		{ 
+			for (int lCol = 0; lCol < pMap[0].length; lCol++)
+			{
+				if (!lNeigh.containsKey(pMap[lRow][lCol]))
+					lNeigh.put(pMap[lRow][lCol], new HashSet<Integer>());
+				
+				Collection<Integer> lNeighSetNow = lNeigh.get(pMap[lRow][lCol]);
+				IntMatrixElement lNow = new IntMatrixElement(pMap,new MatrixPosition(lRow,lCol));
+				
+				Collection<IntMatrixElement> lNexts = new ArrayList<IntMatrixElement>();
+				lNexts.add(lNow.up());
+				lNexts.add(lNow.left());
+				lNexts.add(lNow.down());
+				lNexts.add(lNow.right());
+				
+				for (IntMatrixElement lNext : lNexts)
+				{
+					if (lNext.isInsideMatrix())
+					{
+						lNeighSetNow.add(lNext.get());
+					}
+				}
+				
+			}
+		}
+		
+		Map<Integer, Variable> lIntToVar = new HashMap<Integer,Variable>();
+		for (Integer lKey : lNeigh.keySet())
+		{
+			Variable lVar = new Variable();
+			lVar.mIndex = lKey;
+			lVar.mDomain = (Collection<Integer>) DOMAIN.clone();
+			
+			pVars.add(lVar);
+			lIntToVar.put(lKey, lVar);
+		}
+		
+		
+		ArrayList<PairInts> lGenericPairInts = new ArrayList<PairInts>();
+		for (Integer lInt : DOMAIN)
+		{
+			lGenericPairInts.add(new PairInts(lInt,lInt));
+		}
+		
+		for (Map.Entry<Integer, Collection<Integer> > lEntry : lNeigh.entrySet())
+		{
+			int lNow = lEntry.getKey();
+			Variable lVarNow = lIntToVar.get(lNow);
+			
+			Collection<Integer> lNeighs = lEntry.getValue();
+			for (Integer lNext : lNeighs)
+			{
+				Variable lVarNext = lIntToVar.get(lNext);
+				
+				if (lNext>lNow) //so we don't duplicate constraints
+				{
+					Constraint lCon = new Constraint();
+					lCon.mVariable1 = lVarNow;
+					lCon.mVariable2 = lVarNext;
+					lCon.mValues = (ArrayList<PairInts>) lGenericPairInts.clone();
+					
+					lVarNow.mConstraints.add(lCon);
+					lVarNext.mConstraints.add(lCon);
+					pCons.add(lCon);
+				}
+			}
+		}
+	}
+	
+	public static int[][] CSPToMap(int[][] pMap, Collection<Variable> pVars)
+	{
+		int[][] lMap = pMap.clone();
+		HashMap<Integer, Variable> lIntToVar = new HashMap<Integer, Variable>();
+		for (Variable lVar : pVars)
+		{
+			lIntToVar.put(lVar.mIndex, lVar);
+		}
+		
+		for (int lRow = 0; lRow<pMap.length; lRow++)
+		{
+			for (int lCol = 0; lCol<pMap[lRow].length; lCol++)
+			{
+				lMap[lRow][lCol]=lIntToVar.get(lMap[lRow][lCol]).mValue;
+			}
+		}
+		
+		return lMap;
+	}
+	
+	//checks whether the map in pOutMap is a valid colouring of the map in pInMap
+	//i.e. they are the same size AND
+	//     for any two adjacent elements: 
+	// --- they are in the same zone and of the same colour
+	// --- they are in different zones and of different colours
+	//Note that the check does not verify if elements from the same zone are contiguous.
+	private static boolean checkMapColouring(String pInMap, String pOutMap) throws FileNotFoundException
+	{
+		int[][] lInMap = MapColouringFileHandler.readMap(pInMap);
+		int[][] lOutMap = MapColouringFileHandler.readMap(pOutMap);
+		
+		if (lInMap.length!=lOutMap.length)
+			return false;
+		
+		for (int lRow = 0; lRow<lInMap.length; lRow++)
+		{
+			if (lInMap[lRow].length != lOutMap[lRow].length) 
+			{
+				//shouldn't be possible due to how readMap works
+				//but if someone were to change readMap this might happen
+				//so just putting this here preemptively
+				return false;
+			}
+			
+			for (int lCol = 0; lCol<lInMap[lRow].length; lCol++)
+			{
+				MatrixPosition lNowPosition = new MatrixPosition(lRow,lCol);
+				IntMatrixElement lNowIn = new IntMatrixElement(lInMap,lNowPosition);
+				IntMatrixElement lNowOut = new IntMatrixElement(lOutMap,lNowPosition);
+				
+				Collection<MatrixPosition> lCheckPositions = new ArrayList<MatrixPosition>();
+				lCheckPositions.add(lNowPosition.up());
+				lCheckPositions.add(lNowPosition.left());
+				lCheckPositions.add(lNowPosition.down());
+				lCheckPositions.add(lNowPosition.right());
+				
+				for (MatrixPosition lCheckPosition : lCheckPositions)
+				{
+					IntMatrixElement lCheckIn = new IntMatrixElement(lInMap, lCheckPosition);
+					IntMatrixElement lCheckOut = new IntMatrixElement(lOutMap, lCheckPosition);
+					
+					boolean lSameIn = (lNowIn.get() == lCheckIn.get());
+					boolean lSameOut = (lNowOut.get() == lCheckOut.get());
+					
+					if (lSameIn != lSameOut)
+						return false;
+				}
+			}
+		}
+		
+		return true;
+	}
+	
+	public static void main(String[] args) throws IOException {
+
+		String lMapInPath = "MapIn.txt";
+		String lMapOutPath = "MapOut.txt";
+		String lCSPInPath = "MapCSPIn.txt";
+		String lCSPOutPath = "MapCSPOut.txt";
+		
+		if (1==1)
+		{
+			check
+		}
+		
+		int[][] lMap = generateMap(9,10);
+		
+		MapColouringFileHandler.writeMap(lMapInPath, lMap);
+		
+		int[][] lMapRead = MapColouringFileHandler.readMap(lMapInPath);
+		
+		for (int lRow = 0; lRow<lMapRead.length; lRow++)
+		{
+			for (int lCol = 0; lCol<lMapRead[lRow].length; lCol++)
+			{
+				System.out.print(lMapRead[lRow][lCol]+" ");
+			}
+			System.out.println();
+		}
+		
+		Collection<Variable> lVars = new ArrayList<Variable>();
+		Collection<Constraint> lCons = new ArrayList<Constraint>();
+		mapToCSP(lMapRead,lVars,lCons);
+		
+		CSPFileHandler.writeFileProblem(lCSPInPath, lVars, lCons);
+		Solver.solve(lCSPInPath, lCSPOutPath);
+		
+		CSPFileHandler.readFileAssignment(lCSPOutPath, lVars);
+		int[][] lColourMap = CSPToMap(lMapRead,lVars);
+		
+		for (int lRow = 0; lRow<lMapRead.length; lRow++)
+		{
+			for (int lCol = 0; lCol<lMapRead[lRow].length; lCol++)
+			{
+				System.out.print(lColourMap[lRow][lCol]+" ");
+			}
+			System.out.println();
+		}
+		
+		MapColouringFileHandler.writeMap(lMapOutPath, lColourMap);
+		
+		
+		/*
+		Map<Integer, Variable> lIntToVar = new HashMap<Integer,Variable>();
+		for (Variable lVar : lVars)
+		{
+			System.out.println(lVar.mIndex+" "+lVar.mValue);
+			lIntToVar.put(lVar.mIndex, lVar);
+		}
+		
+		for (int lRow = 0; lRow<lMapRead.length; lRow++)
+		{
+			for (int lCol = 0; lCol<lMapRead[lRow].length; lCol++)
+			{
+				System.out.print("<"+lMapRead[lRow][lCol]+","+lIntToVar.get(lMapRead[lRow][lCol]).mValue+"> ");
+			}
+			System.out.println();
+		}
+		*/
+	}
+}

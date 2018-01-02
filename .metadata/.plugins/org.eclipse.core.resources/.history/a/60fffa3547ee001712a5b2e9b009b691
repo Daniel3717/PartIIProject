@@ -1,0 +1,17 @@
+package daa38.CSP.LookBack;
+
+import java.util.ArrayList;
+import java.util.Stack;
+
+import daa38.CSP.Auxiliary.StepFrame;
+
+public class GaschnigsBackjumping implements LookBack {
+
+	@Override
+	public void process(Stack<StepFrame> pStack) {
+		
+		
+
+	}
+
+}

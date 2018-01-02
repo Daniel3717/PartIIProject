@@ -1,0 +1,39 @@
+package daa38.CSP.VariableOrdering;
+
+import java.util.ArrayList;
+
+import daa38.CSP.Auxiliary.StepFrame;
+import daa38.CSP.Auxiliary.Variable;
+
+public class MostConstrainedVariableOrdering implements VariableOrdering {
+
+	//Theoretically, tie breakers should be on the most constraints with remaining variables
+	//However, it is more efficient to not maintain the constraints up-to-date
+	//Thus, tie-breakers will be decided based on the Variable index (so, pseudo-randomly)
+	@Override
+	public void process(StepFrame pSF) {
+		
+		class VCV //ValuesConstraintsVariables
+		{
+			public int mValues;
+			public int mConstraints;
+			public Variable mVariable;
+			
+			public VCV(int pValues, int pConstraints, Variable pVariable)
+			{
+				mValues = pValues;
+				mConstraints = pConstraints;
+				mVariable = pVariable;
+			}
+		}
+		
+		ArrayList<VCV> mOrder = new ArrayList<VCV>();
+		for (Variable lV : pSF.mVarsToGo)
+		{
+			mOrder.add(new VCV(lV.mDomain.size(),lV.mConstraints.size(),lV));
+			
+		}
+
+	}
+
+}

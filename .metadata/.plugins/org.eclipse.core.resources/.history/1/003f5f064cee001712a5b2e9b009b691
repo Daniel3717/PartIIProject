@@ -1,0 +1,29 @@
+package daa38.CSP.Auxiliary;
+
+public class Timer {
+	
+	private Long mStartTime = null;
+	private Long mStopTime = null;
+	
+	public void start()
+	{
+		mStartTime = System.currentTimeMillis();
+	}
+	
+	public void stop()
+	{
+		mStopTime = System.currentTimeMillis();
+	}
+	
+	public void show()
+	{
+		if (mStartTime==null)
+		{
+			System.out.println("Timer not started");
+			return;
+		}
+		
+		if (mStartTime)
+		System.out.println(x);
+	}
+}

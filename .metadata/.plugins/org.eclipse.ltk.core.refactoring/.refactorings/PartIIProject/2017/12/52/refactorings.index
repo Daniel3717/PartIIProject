@@ -1,0 +1,11 @@
+1514351956000	Rename package 'daa38.MapColoring.Auxiliary'
+1514351965808	Rename package 'daa38.MapColoring.MapGenerators'
+1514351979480	Rename package 'daa38.MapColoring.Main'
+1514351994223	Rename type 'MapColoring'
+1514352003763	Rename type 'MapColoringFileHandler'
+1514352470378	Rename local variable 'mVars'
+1514352480404	Rename local variable 'mMap'
+1514353563185	Delete element
+1514356017913	Rename field 'mNext'
+1514738105947	Rename local variable 'lVarLeafEnd'
+1514739679242	Rename type 'Timer'

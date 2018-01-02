@@ -1,0 +1,28 @@
+package daa38.CSP.LookBack;
+
+import java.util.ArrayList;
+import java.util.Stack;
+
+import daa38.CSP.Auxiliary.StepFrame;
+import daa38.CSP.Auxiliary.Variable;
+import daa38.CSP.Auxiliary.VariablesRestrictions;
+
+public class GaschnigsBackjumping implements LookBack {
+
+	@Override
+	public void process(Stack<StepFrame> pStack) {
+		
+		StepFrame lTopFrame = pStack.peek();
+		Variable lVarLeafEnd = lTopFrame.mVarsToGo.get(lTopFrame.mNowVarIndex);
+		
+		do
+		{
+			lTopFrame = pStack.pop();
+			
+			lTopFrame.mRes.get(lTopFrame.mNowValIndex).liftRestrictions();
+		}
+		while (lTopFrame.mRes.get(lTopFrame.mNowValIndex).getVarRestrictions(lVarLeafEnd)==null);
+
+	}
+
+}

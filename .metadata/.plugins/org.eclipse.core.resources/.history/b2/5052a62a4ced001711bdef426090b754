@@ -1,0 +1,28 @@
+package daa38.CSP.VariableOrdering;
+
+import java.util.ArrayList;
+
+import daa38.CSP.Auxiliary.StepFrame;
+import daa38.CSP.Auxiliary.Variable;
+
+public class MostConstrainedVariableOrdering implements VariableOrdering {
+
+	@Override
+	public void process(StepFrame pSF) {
+		
+		class VCV //ValuesConstraintsVariables
+		{
+			public int mValues;
+			public int mConstraints;
+			public int mVariable;
+		}
+		
+		ArrayList<VCV> mOrder = new ArrayList<VCV>();
+		for (Variable lV : pSF.mVarsToGo)
+		{
+			
+		}
+
+	}
+
+}

@@ -1,3 +1,23 @@
 1513871600010	Rename method 'digitFormat'
 1513872638209	Copy package
 1513872641143	Delete element
+1513872933212	Delete element
+1513872984521	Rename package 'daa38.Auxiliary'
+1513872999974	Rename package 'daa38.LookBack'
+1513873037166	Rename package 'daa38.Solver'
+1513873051226	Move compilation unit
+1513873054276	Delete element
+1513873061867	Rename package 'daa38.ValueSelection'
+1513873070135	Rename package 'daa38.VariableOrdering'
+1513873083342	Move compilation unit
+1513873129156	Delete element
+1513873161497	Rename type 'FileHandler'
+1513874435382	Rename compilation unit 'MatrixPosition.java'
+1513874516471	Rename type 'Position'
+1513874535372	Move compilation unit
+1513874543502	Rename package 'daa38.MapColoring'
+1513874553133	Rename package 'daa38.nQueens'
+1513874908895	Rename type 'MatrixPosition'
+1513875309723	Rename type 'IntMatrixPosition'
+1513875357209	Rename field 'col'
+1513875548473	Rename type 'IntMatrixTraveller'

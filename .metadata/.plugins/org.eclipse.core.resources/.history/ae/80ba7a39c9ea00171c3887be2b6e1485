@@ -1,0 +1,5 @@
+package daa38.MapColouring.Auxiliary;
+
+public class MatrixPosition {
+	public int row,col;
+}

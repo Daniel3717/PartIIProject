@@ -1,0 +1,16 @@
+package daa38.CSP.VariableOrdering;
+
+import daa38.CSP.Auxiliary.StepFrame;
+
+public class MostConstrainedVariableOrdering implements VariableOrdering {
+
+	@Override
+	public void process(StepFrame pSF) {
+		for (Variable lV : pSF.mVarsToGo)
+		{
+			
+		}
+
+	}
+
+}

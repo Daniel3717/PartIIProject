@@ -1,0 +1,17 @@
+package daa38.CSP.Auxiliary;
+
+public class Timer {
+	
+	private long mStartTime;
+	private long mStopTime;
+	
+	public void start()
+	{
+		mStartTime = System.currentTimeMillis();
+	}
+	
+	public void stop()
+	{
+		mFinishT
+	}
+}

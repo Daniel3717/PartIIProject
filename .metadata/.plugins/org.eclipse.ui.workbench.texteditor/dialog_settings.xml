@@ -2,17 +2,24 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="Col" key="selection"/>
+		<item value="ArrayList" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="Column"/>
-			<item value="Line"/>
-			<item value="System"/>
+			<item value="ArrayList"/>
+			<item value="intmatrixelement"/>
+			<item value="Position"/>
+			<item value="Color"/>
+			<item value="color"/>
+			<item value="hashmap"/>
+			<item value="IntMatrix"/>
+			<item value="row"/>
 		</list>
 		<list key="replacehistory">
+			<item value="Colour"/>
+			<item value="colour"/>
 			<item value="Col"/>
 			<item value="Row"/>
 		</list>

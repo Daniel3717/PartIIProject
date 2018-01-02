@@ -1,0 +1,26 @@
+package daa38.MapColouring.Auxiliary;
+
+public class MatrixPosition {
+	protected int mRow,mCol;
+	
+	public MatrixPosition(int pRow, int pCol)
+	{
+		mRow = pRow;
+		mCol = pCol;
+	}
+	
+	public void up()
+	{
+		mRow--;
+	}
+	
+	public void left()
+	{
+		mCol--;
+	}
+	
+	public void down()
+	{
+		
+	}
+}

@@ -1,0 +1,39 @@
+package daa38.MapColouring.Auxiliary;
+
+public class IntMatrixElement extends MatrixPosition {
+
+	protected int[][] mMatrix;
+	
+	public IntMatrixElement(int[][] pMatrix, int pRow, int pCol)
+	{
+		mMatrix=pMatrix;
+		mRow=pRow;
+		mCol=pCol;
+	}
+	
+	public boolean isInsideMatrix()
+	{
+		if (mRow>=mMatrix.length)
+			return false;
+		if (mRow<0)
+			return false;
+		
+		if (mCol>=mMatrix[mRow].length)
+			return false;
+		if (mCol<0)
+			return false;
+		
+		return true;
+	}
+	
+	public int get()
+	{
+		return mMatrix[mRow][mCol];
+	}
+	
+	public void set(int pInt)
+	{
+		mMatrix[mRow][mCol] = pInt;
+	}
+	
+}

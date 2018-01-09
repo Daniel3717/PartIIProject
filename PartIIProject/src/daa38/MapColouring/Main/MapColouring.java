@@ -68,7 +68,7 @@ public class MapColouring {
 		for (Integer lKey : lNeigh.keySet())
 		{
 			Variable lVar = new Variable();
-			lVar.mIndex = lKey;
+			lVar.mName = lKey;
 			lVar.mDomain = (Collection<Integer>) DOMAIN.clone();
 			
 			pVars.add(lVar);
@@ -118,7 +118,7 @@ public class MapColouring {
 		HashMap<Integer, Variable> lIntToVar = new HashMap<Integer, Variable>();
 		for (Variable lVar : pVars)
 		{
-			lIntToVar.put(lVar.mIndex, lVar);
+			lIntToVar.put(lVar.mName, lVar);
 		}
 		
 		for (int lRow = 0; lRow<pMap.length; lRow++)
@@ -227,7 +227,8 @@ public class MapColouring {
 			mapToCSP(lMapRead,lVars,lCons);
 			
 			CSPFileHandler.writeFileProblem(lCSPInPath, lVars, lCons);
-			Solver.solve(lCSPInPath, lCSPOutPath);
+			Solver lS = new Solver();
+			lS.solve(lCSPInPath, lCSPOutPath);
 			
 			CSPFileHandler.readFileAssignment(lCSPOutPath, lVars);
 			int[][] lColourMap = CSPToMap(lMapRead,lVars);

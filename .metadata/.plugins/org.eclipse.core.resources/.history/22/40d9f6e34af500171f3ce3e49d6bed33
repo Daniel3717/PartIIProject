@@ -1,0 +1,43 @@
+package daa38.CSP.LookBack;
+
+import java.util.ArrayList;
+import java.util.Stack;
+
+import daa38.CSP.Auxiliary.StepFrame;
+import daa38.CSP.Auxiliary.Variable;
+
+public class GaschnigsBackjumping extends Backtrack {
+
+	@Override
+	public int jump(ArrayList<StepFrame> pSteps, int pIndex) {
+		
+		//System.out.print("Here");
+		
+		StepFrame lNowFrame = pSteps.get(pIndex);
+		Variable lVarEnd = lNowFrame.mVar;
+		if (lVarEnd.mDomain.size()==0) //so, if it is a leaf dead-end
+		{
+			lNowFrame.resetFrame();
+			pIndex--;
+			lNowFrame = pSteps.get(pIndex);
+			do
+			{
+				StepFrame lNowFrame = pSteps.get(pIndex);
+				lNowFrame.removeValue();
+				
+				lTopFrame.mVar.mValue = -1;
+				lTopFrame.mRes.get(lTopFrame.mNowValIndex).liftRestrictions();
+			}
+			while (lTopFrame.mRes.get(lTopFrame.mNowValIndex).getVarRestrictions(lVarEnd)==null);
+			
+			lTopFrame.mNowValIndex++;
+			pStack.push(lTopFrame);
+			
+			return;
+		}
+		
+		//if it is an internal dead-end, we just backtrack
+		super.jump(pStack);
+	}
+
+}

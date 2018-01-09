@@ -3,7 +3,6 @@ package daa38.CSP.VariableOrdering;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import daa38.CSP.Auxiliary.StepFrame;
 import daa38.CSP.Auxiliary.Variable;
 
 public class MostConstrainedVariableOrdering implements VariableOrdering {
@@ -14,7 +13,7 @@ public class MostConstrainedVariableOrdering implements VariableOrdering {
 	//Thus, tie-breakers will be decided based on the most original constraints
 	//(Further tie-breakers will be decided based on Variable index, which should be unique)
 	@Override
-	public void process(StepFrame pSF) {
+	public void order(ArrayList<Variable> pVars) {
 		
 		class VCV implements Comparable<VCV> //ValuesConstraintsVariables
 		{
@@ -41,9 +40,9 @@ public class MostConstrainedVariableOrdering implements VariableOrdering {
 				if (this.mConstraints<that.mConstraints)
 					return 1;
 				
-				if (this.mVariable.mIndex<that.mVariable.mIndex)
+				if (this.mVariable.mName<that.mVariable.mName)
 					return -1;
-				if (this.mVariable.mIndex>that.mVariable.mIndex)
+				if (this.mVariable.mName>that.mVariable.mName)
 					return 1;
 				
 				return 0;
@@ -51,7 +50,7 @@ public class MostConstrainedVariableOrdering implements VariableOrdering {
 		}
 		
 		ArrayList<VCV> mOrder = new ArrayList<VCV>();
-		for (Variable lV : pSF.mVarsToGo)
+		for (Variable lV : pVars)
 		{
 			mOrder.add(new VCV(lV.mDomain.size(),lV.mConstraints.size(),lV));
 		}
@@ -59,14 +58,12 @@ public class MostConstrainedVariableOrdering implements VariableOrdering {
 		Collections.sort(mOrder);
 		
 		//DEBUG:System.out.println("Ordering is:");
-		pSF.mVarsToGo.clear();
+		pVars.clear();
 		for (VCV lVCV : mOrder)
 		{
-			pSF.mVarsToGo.add(lVCV.mVariable);
+			pVars.add(lVCV.mVariable);
 			//DEBUG:System.out.println("Variable "+lVCV.mVariable.mIndex+" with "+lVCV.mValues+" values and "+lVCV.mConstraints+" constraints");
 		}
-		
-		pSF.mNowVarIndex=0;
 	}
 
 }

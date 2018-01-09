@@ -1,0 +1,9 @@
+package daa38.CSP.VariableOrdering;
+
+import java.util.ArrayList;
+
+import daa38.CSP.Auxiliary.StepFrame;
+
+public interface VariableOrdering {
+	public void process(ArrayList<Variable> pVars);//pSF will have only mAssVars assigned
+}

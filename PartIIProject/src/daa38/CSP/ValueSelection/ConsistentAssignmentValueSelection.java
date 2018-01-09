@@ -1,6 +1,7 @@
 package daa38.CSP.ValueSelection;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import daa38.CSP.Auxiliary.Constraint;
 import daa38.CSP.Auxiliary.PairInts;
@@ -11,19 +12,15 @@ import daa38.CSP.Auxiliary.VariablesRestrictions;
 public class ConsistentAssignmentValueSelection implements ValueSelection {
 
 	@Override
-	public void process(StepFrame pSF) {
-		Variable lNowVar = pSF.mVarsToGo.get(pSF.mNowVarIndex);
+	public void select(StepFrame pSF) {
+		Variable lNowVar = pSF.mVar;
 		
-		int lMaxValue = 0;
+		HashMap<Integer, VariablesRestrictions> lVR = new HashMap<Integer, VariablesRestrictions>();
+		
 		for (Integer lInt : lNowVar.mDomain)
 		{
-			if (lInt>lMaxValue)
-				lMaxValue = lInt;
+			lVR.put(lInt, new VariablesRestrictions());
 		}
-		
-		ArrayList< VariablesRestrictions > lVR = new ArrayList< VariablesRestrictions >();
-		for (int i=0;i<=lMaxValue;i++)
-			lVR.add(new VariablesRestrictions());
 		
 		for (Constraint lCon : lNowVar.mConstraints)
 		{
@@ -40,16 +37,11 @@ public class ConsistentAssignmentValueSelection implements ValueSelection {
 				lOtherVar = lCon.mVariable1;
 			}
 			
-			//ArrayList<Integer> lValRes = new ArrayList<Integer>();
 			for (PairInts lPI : lCon.mValues)
 			{
-				//no, this doesn't quite work. It needs to get separated by values.
-				//lValRes.add(lPI.getAtIndex((2-lNowIndex)));
-				
-				//I'll use the slower one
-				if (lPI.getAtIndex(lNowIndex)<=lMaxValue)
+				if (lOtherVar.mDomain.contains(lPI.getAtIndex(3-lNowIndex)))
 				{
-					if (lOtherVar.mDomain.contains(lPI.getAtIndex(3-lNowIndex)))
+					if (lVR.get(lPI.getAtIndex(lNowIndex))!=null)
 						lVR.get(lPI.getAtIndex(lNowIndex)).addRestriction(lOtherVar, lPI.getAtIndex(3-lNowIndex));
 				}
 			}

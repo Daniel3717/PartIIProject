@@ -1,6 +1,6 @@
 package daa38.CSP.LookBack;
 
-import java.util.Stack;
+import java.util.ArrayList;
 
 import daa38.CSP.Auxiliary.StepFrame;
 import daa38.CSP.Auxiliary.Variable;
@@ -8,37 +8,28 @@ import daa38.CSP.Auxiliary.Variable;
 public class GaschnigsBackjumping extends Backtrack {
 
 	@Override
-	public void process(Stack<StepFrame> pStack) {
+	public int jump(ArrayList<StepFrame> pSteps, int pIndex) {
 		
-		//System.out.print("Here");
-		
-		StepFrame lTopFrame = pStack.peek();
-		if (lTopFrame.mNowVarIndex<lTopFrame.mVarsToGo.size())
+		StepFrame lNowFrame = pSteps.get(pIndex);
+		Variable lVarEnd = lNowFrame.mVar;
+		if (lVarEnd.mDomain.size()==0) //so, if it is a leaf dead-end
 		{
-			Variable lVarEnd = lTopFrame.mVarsToGo.get(lTopFrame.mNowVarIndex);
-			if (lVarEnd.mDomain.size()==0) //so, if it is a leaf dead-end
+			do
 			{
-				pStack.pop();
-				do
-				{
-					lTopFrame = pStack.pop();
-					
-					lTopFrame.mVarsToGo.get(lTopFrame.mNowVarIndex).mValue = -1;
-					lTopFrame.mRes.get(lTopFrame.mNowValIndex).liftRestrictions();
-				}
-				while (lTopFrame.mRes.get(lTopFrame.mNowValIndex).getVarRestrictions(lVarEnd)==null);
-				
-				lTopFrame.mNowValIndex++;
-				pStack.push(lTopFrame);
-				
-				return;
+				lNowFrame.resetFrame();
+				pIndex--;
+				lNowFrame = pSteps.get(pIndex);
 			}
-			//it should be impossible to get here
-			System.out.println("IMPOSSIBLE AREA REACHED!");
+			while (!lNowFrame.restrictsVariable(lVarEnd));
+			
+			lNowFrame.removeValue();
+			lNowFrame.mNowValIndex++;
+			
+			return pIndex;
 		}
 		
 		//if it is an internal dead-end, we just backtrack
-		super.process(pStack);
+		return super.jump(pSteps,pIndex);
 	}
 
 }

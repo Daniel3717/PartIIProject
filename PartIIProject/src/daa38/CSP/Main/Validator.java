@@ -29,7 +29,7 @@ public class Validator {
 		{
 			if (!lVar.mDomain.contains(lVar.mValue))
 			{
-				System.out.println(lVar.mIndex+" cannot have value "+lVar.mValue);
+				System.out.println(lVar.mName+" cannot have value "+lVar.mValue);
 				return false;
 			}
 		}
@@ -40,7 +40,7 @@ public class Validator {
 			{
 				if ((lCon.mVariable1.mValue==lPair.first)&&(lCon.mVariable2.mValue==lPair.second))
 				{
-					System.out.println(lCon.mVariable1.mIndex+" and "+lCon.mVariable2.mIndex+
+					System.out.println(lCon.mVariable1.mName+" and "+lCon.mVariable2.mName+
 							" cannot have values ("+lCon.mVariable1.mValue+","+lCon.mVariable2.mValue+")");
 					return false;
 				}

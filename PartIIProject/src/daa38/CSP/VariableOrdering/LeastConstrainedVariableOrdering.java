@@ -1,16 +1,19 @@
 package daa38.CSP.VariableOrdering;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
-import daa38.CSP.Auxiliary.StepFrame;
+import daa38.CSP.Auxiliary.Variable;
+
+
 
 public class LeastConstrainedVariableOrdering extends MostConstrainedVariableOrdering {
 
 	//Basically, we do MostConstrainedVariableOrdering, then reverse the result
 	@Override
-	public void process(StepFrame pSF) {
-		super.process(pSF);
-		Collections.reverse(pSF.mVarsToGo);
+	public void order(ArrayList<Variable> pVars) {
+		super.order(pVars);
+		Collections.reverse(pVars);
 	}
 
 }

@@ -29,11 +29,11 @@ public class NQueens {
 		for (int lRow = 0; lRow<pNrQueens; lRow++)
 		{
 			Variable lVar = new Variable();
-			lVar.mIndex = lRow;
+			lVar.mName = lRow;
 			lVar.mDomain = (Collection<Integer>) lValues.clone();
 			pVars.add(lVar);
 			
-			lITV.put(lVar.mIndex, lVar);
+			lITV.put(lVar.mName, lVar);
 		}
 		
 		for (int lRow1 = 0; lRow1<pNrQueens; lRow1++)
@@ -67,7 +67,7 @@ public class NQueens {
 		
 		for (Variable lVar : pVars)
 		{
-			lMatrix[lVar.mIndex][lVar.mValue]=1;
+			lMatrix[lVar.mName][lVar.mValue]=1;
 		}
 		
 		return lMatrix;
@@ -142,7 +142,7 @@ public class NQueens {
 
 	public static void main(String[] args) throws IOException {
 		
-		for (int lInstance=4;lInstance<15;lInstance++)
+		for (int lInstance=4;lInstance<=20;lInstance++)
 		{
 			ArrayList<Variable> lVars = new ArrayList<Variable>();
 			ArrayList<Constraint> lCons = new ArrayList<Constraint>();
@@ -154,13 +154,14 @@ public class NQueens {
 			CSPFileHandler.writeFileProblem(lCSPProblemPath, lVars, lCons);
 			
 			String lCSPSolutionPath = "nQueens/"+lInstance+"_nQueensCSP_solution.txt";
-			Solver.solve(lCSPProblemPath, lCSPSolutionPath);
+			Solver lS = new Solver();
+			lS.solve(lCSPProblemPath, lCSPSolutionPath);
 			
 			ArrayList<Variable> lVarsRead = new ArrayList<Variable>();
 			for (int i=0;i<NUMBER_OF_QUEENS;i++)
 			{
 				Variable lVar = new Variable();
-				lVar.mIndex = i;
+				lVar.mName = i;
 				lVarsRead.add(lVar);
 			}
 			CSPFileHandler.readFileAssignment(lCSPSolutionPath, lVarsRead);
@@ -169,7 +170,7 @@ public class NQueens {
 			String lNQueensSolutionPath = "nQueens/"+lInstance+"_nQueens_solution.txt";
 			NQueensFileHandler.writeNQueensSolution(lNQueensSolutionPath, lMatrix);
 			
-			System.out.println(NQueensFileHandler.nQueensCheckFile(lNQueensSolutionPath));
+			System.out.println(lInstance+" "+NQueensFileHandler.nQueensCheckFile(lNQueensSolutionPath));
 		}
 	}
 

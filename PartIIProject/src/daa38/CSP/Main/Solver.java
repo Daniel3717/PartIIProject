@@ -2,8 +2,6 @@ package daa38.CSP.Main;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Stack;
 
 import daa38.CSP.Auxiliary.Constraint;
 import daa38.CSP.Auxiliary.StepFrame;
@@ -21,34 +19,21 @@ import daa38.CSP.VariableOrdering.VariableOrdering;
 
 public class Solver {
 
-	public static Stack<StepFrame> mStack;
+	public ArrayList<StepFrame> mSteps;
 	
-	public static ArrayList<Variable> mVariables;
-	public static ArrayList<Constraint> mConstraints;
-	
-	// Assumes:
-	// 0 <= lNowFrame.mNowVarIndex < lNowFrame.mVarsToGo.size()
-	// 0 <= lNowFrame.mNowValIndex < lNowFrame.mValsToGo.size()
-	// Correctness of StepFrame construction given as argument
-	public static StepFrame buildFrame(StepFrame pSF)
+	public ArrayList<Variable> mVariables;
+	public ArrayList<Constraint> mConstraints;
+
+	public Solver()
 	{
-		if (!pSF.mRes.get(pSF.mNowValIndex).enforceRestrictions())
-			System.out.println("An enforce restrictions returned false!");
-		
-		StepFrame lSF = new StepFrame();
-		lSF.mExVars = (HashMap<Variable,StepFrame>) pSF.mExVars.clone();
-		lSF.mExVars.put(pSF.mVarsToGo.get(pSF.mNowVarIndex), pSF);
-		lSF.mVarsToGo = (ArrayList<Variable>) pSF.mVarsToGo.clone();
-		lSF.mVarsToGo.remove(pSF.mVarsToGo.get(pSF.mNowVarIndex));
-		
-		pSF.mVarsToGo.get(pSF.mNowVarIndex).mValue = pSF.mValsToGo.get(pSF.mNowValIndex);
-		
-		return lSF;
+		mSteps = new ArrayList<StepFrame>();
+		mVariables = new ArrayList<Variable>();
+		mConstraints = new ArrayList<Constraint>();
 	}
 	
-	public static void solve(String pFileIn, String pFileOut) throws IOException
+	public void solve(String pFileIn, String pFileOut) throws IOException
 	{
-		mStack = new Stack<StepFrame>();
+		mSteps = new ArrayList<StepFrame>();
 		mVariables = new ArrayList<Variable>();
 		mConstraints = new ArrayList<Constraint>();
 
@@ -59,63 +44,59 @@ public class Solver {
 		LookBack lLB = new Backtrack();
 		//LookBack lLB = new GaschnigsBackjumping();
 		
-		StepFrame lFirstFrame = new StepFrame();
-		lFirstFrame.mExVars = new HashMap<Variable,StepFrame>();
-		lFirstFrame.mVarsToGo = (ArrayList<Variable>) mVariables.clone();
-		mStack.push(lFirstFrame);
-		
-		
-		//int step=0;
-		//If the stack reaches mVariables.size()+1 frames, then we have a solution
-		//If the stack reaches 0 frames, then there is no solution
-		while ((mStack.size()>0)&&(mStack.size()<mVariables.size()+1))
+		lVO.order(mVariables);
+		for (Variable lV : mVariables)
 		{
-			StepFrame lNowFrame = mStack.peek();
-			//step++;
-			//System.out.println(step);
+			mSteps.add(new StepFrame(lV));
+		}
+		
+		
+		int lIndex = 0;
+		//if lIndex reaches mSteps.size(), then we have a solution
+		//if lIndex reaches -1, then there is no solution
+		while ( (lIndex<mSteps.size()) && (lIndex > -1) )
+		{
+			StepFrame lNowFrame = mSteps.get(lIndex);
+			//DEBUG:
+			//System.out.println();
+			//System.out.println("Index: "+lIndex+" (while mSteps.size()=="+mSteps.size()+")");
 			//lNowFrame.outputFrame();
+			//System.out.println();
 			
-			if (lNowFrame.mNowVarIndex==-1)
+			if (lNowFrame.mNowValIndex==-1)
 			{
-				lVO.process(lNowFrame);
+				lVS.select(lNowFrame);
+				
+				if (lNowFrame.mValsToGo.size()==0) 
+				{
+					//so this is a (leaf) dead end
+					lIndex = lLB.jump(mSteps, lIndex);
+				}
 			}
 			else
-			if (lNowFrame.mNowVarIndex < lNowFrame.mVarsToGo.size())
+			if (lNowFrame.mNowValIndex < lNowFrame.mValsToGo.size())
 			{
-				if (lNowFrame.mNowValIndex==-1)
+				mSteps.get(lIndex).assignValue();
+				lIndex++;
+				if (lIndex < mSteps.size())
 				{
-					lVS.process(lNowFrame);
-					if (lNowFrame.mValsToGo.size()==0) //if we cannot give any values to the variable, it's a dead end
-					{
-						lLB.process(mStack);
-					}
-				}
-				else
-				if (lNowFrame.mNowValIndex < lNowFrame.mValsToGo.size())
-				{
-					mStack.push(buildFrame(lNowFrame));
-				}
-				else //Finished checking all values for current variable
-				{
-					lNowFrame.mNowVarIndex++;
-					lNowFrame.mNowValIndex = -1;
-					lNowFrame.mValsToGo.clear();
-					lNowFrame.mRes.clear();
+					mSteps.get(lIndex).resetFrame();
 				}
 			}
-			else //Finished checking all variables
+			else //Finished checking all values for current variable
 			{
-				lLB.process(mStack);
+				//so this is a (internal) dead end
+				lIndex = lLB.jump(mSteps, lIndex);
 			}
 		}
 		
 		
-		if (mStack.empty())
+		if (lIndex == -1)
 		{
 			//System.out.println("No solution");
 		}
 		else
-			if (mStack.size()==mVariables.size()+1)	
+			if (lIndex == mVariables.size())	
 			{
 				//System.out.println("Found solution:");
 				for (Variable lV : mVariables)
@@ -126,7 +107,8 @@ public class Solver {
 			}
 			else
 			{
-				//System.out.println("At the end, stack has "+mStack.size()+" frames");
+				//Should be impossible to reach
+				System.out.println("Impossible area reached in Solver.java");
 			}
 	}
 	
@@ -135,13 +117,14 @@ public class Solver {
 		AuxTimer lT = new AuxTimer();
 		lT.start();
 		
-		String lFileIn = "nQueens/12_nQueensCSP_problem.txt";
-		String lFileOut = "nQueens/12_nQueensCSP_solution.txt";
+		String lFileIn = "nQueens/4_nQueensCSP_problem.txt";
+		String lFileOut = "nQueens/4_nQueensCSP_solution.txt";
 		
 		//String lFileIn = "1_problem.txt";
 		//String lFileOut = "1_solution.txt";
 		
-		solve(lFileIn, lFileOut);
+		Solver lS = new Solver();
+		lS.solve(lFileIn, lFileOut);
 
 		lT.stop();
 		lT.show();

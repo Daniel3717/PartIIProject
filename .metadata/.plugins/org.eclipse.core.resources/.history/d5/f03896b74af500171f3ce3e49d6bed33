@@ -1,0 +1,75 @@
+package daa38.CSP.Auxiliary;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class StepFrame {
+	public Variable mVar; //Variable to assign at this frame
+	public ArrayList<Integer> mValsToGo; //Values that can be used for current variable
+	public ArrayList<VariablesRestrictions> mRes; //Restrictions imposed on other variables due to value at same index
+	public int mNowValIndex; //Current value's index
+
+	public StepFrame(Variable pVar)
+	{
+		mVar = pVar;
+		mValsToGo = new ArrayList<Integer>();
+		mRes = new ArrayList< VariablesRestrictions >();
+		mNowValIndex = -1;
+	}
+	
+	public void resetFrame()
+	{
+		if (mVar.mValue != -1)
+			this.removeValue();
+		
+		mValsToGo.clear();
+		mRes.clear();
+		mNowValIndex = -1;
+	}
+	
+	public void assignValue()
+	{
+		if (this.mVar.mValue!=-1)
+		{
+			System.out.println("assignValue() was called when a value was already assigned; removing assigned value");
+			removeValue();
+		}
+		
+		int lValueIndex = mNowValIndex;
+		mVar.mValue = mValsToGo.get(lValueIndex);
+		mRes.get(lValueIndex).enforceRestrictions();
+	}
+	
+	public boolean restrictsVariable(Variable pVar)
+	{
+
+	}
+	
+	public void removeValue()
+	{
+		if (mVar.mValue == -1)
+		{
+			System.out.println("removeValue() was called with no value assigned");
+			//it won't do any harm, but it's doing nothing so the call was probably erroneous
+		}
+		
+		mVar.mValue = -1;
+		mRes.get(mNowValIndex).liftRestrictions();
+	}
+	
+	public void outputFrame()
+	{
+		System.out.print("Variable to assign: "+this.mVar);
+		System.out.println();
+		
+		System.out.print("Values the variable can take:");
+		for (Integer lInt : this.mValsToGo)
+			System.out.print(" "+lInt);
+		System.out.println();
+		System.out.println();
+		
+		System.out.println("Current value index: "+this.mNowValIndex);
+		System.out.println();
+		
+	}
+}

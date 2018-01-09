@@ -1,0 +1,9 @@
+package daa38.CSP.LookBack;
+
+import java.util.ArrayList;
+
+import daa38.CSP.Auxiliary.StepFrame;
+
+public interface LookBack {
+	public int jump(ArrayList<StepFrame> pSteps, int pIndex);
+}

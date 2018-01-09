@@ -1,15 +1,15 @@
 package daa38.CSP.VariableOrdering;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
-import daa38.CSP.Auxiliary.StepFrame;
+import daa38.CSP.Auxiliary.Variable;
 
 public class RandomVariableOrdering implements VariableOrdering {
 
 	@Override
-	public void process(StepFrame pSF) {
-		Collections.shuffle(pSF.mVarsToGo);
-		pSF.mNowVarIndex=0;
+	public void order(ArrayList<Variable> pVars) {
+		Collections.shuffle(pVars);
 	}
 
 }

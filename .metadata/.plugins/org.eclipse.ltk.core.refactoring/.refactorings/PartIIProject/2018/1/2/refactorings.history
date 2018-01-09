@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename field &apos;mIndex&apos; in &apos;daa38.CSP.Auxiliary.Variable&apos; to &apos;mName&apos;&#x0D;&#x0A;- Original project: &apos;PartIIProject&apos;&#x0D;&#x0A;- Original element: &apos;daa38.CSP.Auxiliary.Variable.mIndex&apos;&#x0D;&#x0A;- Renamed element: &apos;daa38.CSP.Auxiliary.Variable.mName&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" delegate="false" deprecate="false" description="Rename field &apos;mIndex&apos;" flags="589830" getter="false" id="org.eclipse.jdt.ui.rename.field" input="/src&lt;daa38.CSP.Auxiliary{Variable.java[Variable^mIndex" name="mName" references="true" setter="false" stamp="1515510764662" textual="false" version="1.0"/>
+</session>

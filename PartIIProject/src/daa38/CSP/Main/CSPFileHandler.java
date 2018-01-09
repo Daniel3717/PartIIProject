@@ -30,7 +30,7 @@ public class CSPFileHandler {
 			int lIndex = lProblemInput.nextInt();
 			lIntToVarMap.put(lIndex, lNewVar);
 			
-			lNewVar.mIndex = lIndex;
+			lNewVar.mName = lIndex;
 			
 			int lValueCount = lProblemInput.nextInt();
 			for (int lValIt=0;lValIt<lValueCount;lValIt++)
@@ -73,7 +73,7 @@ public class CSPFileHandler {
 	{
 		HashMap<Integer, Variable> lIntToVarMap = new HashMap<Integer, Variable>();
 		for (Variable lV : pVariables)
-			lIntToVarMap.put(lV.mIndex, lV);
+			lIntToVarMap.put(lV.mName, lV);
 
 		Scanner lAssignmentInput = new Scanner(new File(pPath));
 		int lNumberOfVariables = lAssignmentInput.nextInt();
@@ -94,7 +94,7 @@ public class CSPFileHandler {
 		lAssignmentOutput.write(pVariables.size()+"\r\n");
 		for (Variable lV : pVariables)
 		{
-			lAssignmentOutput.write(lV.mIndex+" "+lV.mValue+"\r\n");
+			lAssignmentOutput.write(lV.mName+" "+lV.mValue+"\r\n");
 		}
 		
 		lAssignmentOutput.close();
@@ -109,7 +109,7 @@ public class CSPFileHandler {
 		lProblemOutput.write(pVariables.size()+"\r\n");
 		for (Variable lVar : pVariables)
 		{
-			lProblemOutput.write(lVar.mIndex+" ");
+			lProblemOutput.write(lVar.mName+" ");
 			lProblemOutput.write(lVar.mDomain.size()+"");
 			
 			for (Integer lInt : lVar.mDomain)
@@ -122,7 +122,7 @@ public class CSPFileHandler {
 		lProblemOutput.write(pConstraints.size()+"\r\n");
 		for (Constraint lCon : pConstraints)
 		{
-			lProblemOutput.write(lCon.mVariable1.mIndex+" "+lCon.mVariable2.mIndex+" "+lCon.mValues.size());
+			lProblemOutput.write(lCon.mVariable1.mName+" "+lCon.mVariable2.mName+" "+lCon.mValues.size());
 			
 			for (PairInts lPI : lCon.mValues)
 			{
@@ -142,13 +142,13 @@ public class CSPFileHandler {
 		ArrayList<Constraint> lCons = new ArrayList<Constraint>();
 		
 		Variable lV1 = new Variable();
-		lV1.mIndex = 0;
+		lV1.mName = 0;
 		lV1.mDomain.add(1);
 		lV1.mDomain.add(2);
 		lVars.add(lV1);
 		
 		Variable lV2 = new Variable();
-		lV2.mIndex = 1;
+		lV2.mName = 1;
 		lV2.mDomain.add(1);
 		lV2.mDomain.add(2);
 		lVars.add(lV2);

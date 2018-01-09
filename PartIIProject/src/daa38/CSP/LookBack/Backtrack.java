@@ -1,27 +1,29 @@
 package daa38.CSP.LookBack;
 
-import java.util.Stack;
+import java.util.ArrayList;
 
 import daa38.CSP.Auxiliary.StepFrame;
 
 public class Backtrack implements LookBack {
 
 	@Override
-	public void process(Stack<StepFrame> pStack) {
-		pStack.pop();
+	public int jump(ArrayList<StepFrame> pSteps, int pIndex) {
+		pSteps.get(pIndex).resetFrame();
+		pIndex--;
 		
-		if (pStack.empty()) //Failed to find a solution
-			return;
+		if (pIndex==-1) //Failed to find a solution
+			return pIndex;
 		
-		StepFrame currentFrame = pStack.peek();
+		StepFrame currentFrame = pSteps.get(pIndex);
 		
+		//DEBUG:
 		//System.out.println("Backtrack to:");
 		//currentFrame.outputFrame();
 		
-		
-		currentFrame.mRes.get(currentFrame.mNowValIndex).liftRestrictions();
-		currentFrame.mVarsToGo.get(currentFrame.mNowVarIndex).mValue = -1;
+		currentFrame.removeValue();
 		currentFrame.mNowValIndex++;
+		
+		return pIndex;
 	}
 
 }

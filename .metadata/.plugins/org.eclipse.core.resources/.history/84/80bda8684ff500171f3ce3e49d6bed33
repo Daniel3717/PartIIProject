@@ -1,0 +1,21 @@
+package daa38.CSP.Auxiliary;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+
+public class Variable {
+	public Integer mIndex;
+	public Collection<Integer> mDomain;
+	public Integer mValue;
+	public Collection<Constraint> mConstraints;
+	
+	public Variable()
+	{
+		mIndex = null;
+		mDomain = new HashSet<Integer>();
+		mValue = null;
+		mConstraints = new ArrayList<Constraint>();
+	}
+	
+}

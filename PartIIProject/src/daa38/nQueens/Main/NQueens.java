@@ -142,7 +142,7 @@ public class NQueens {
 
 	public static void main(String[] args) throws IOException {
 		
-		for (int lInstance=4;lInstance<=20;lInstance++)
+		for (int lInstance=4;lInstance<=40;lInstance++)
 		{
 			ArrayList<Variable> lVars = new ArrayList<Variable>();
 			ArrayList<Constraint> lCons = new ArrayList<Constraint>();

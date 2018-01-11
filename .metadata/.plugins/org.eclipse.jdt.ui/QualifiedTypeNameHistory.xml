@@ -14,8 +14,6 @@
 <fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="daa38.CSP.Auxiliary.Constraint"/>
 <fullyQualifiedTypeName name="java.util.Set"/>
-<fullyQualifiedTypeName name="java.util.HashSet"/>
-<fullyQualifiedTypeName name="java.util.Map"/>
 <fullyQualifiedTypeName name="daa38.MapColoring.Auxiliary.Position"/>
 <fullyQualifiedTypeName name="daa38.MapColoring.Auxiliary.MatrixPosition"/>
 <fullyQualifiedTypeName name="java.util.Map.Entry"/>
@@ -31,8 +29,12 @@
 <fullyQualifiedTypeName name="daa38.CSP.VariableOrdering.MostConstrainedVariableOrdering"/>
 <fullyQualifiedTypeName name="java.util.Collections"/>
 <fullyQualifiedTypeName name="daa38.CSP.VariableOrdering.LeastConstrainedVariableOrdering"/>
-<fullyQualifiedTypeName name="daa38.CSP.Auxiliary.Variable"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
-<fullyQualifiedTypeName name="java.util.Collection"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="daa38.CSP.Auxiliary.Variable"/>
+<fullyQualifiedTypeName name="java.util.Collection"/>
+<fullyQualifiedTypeName name="java.util.HashSet"/>
+<fullyQualifiedTypeName name="daa38.CSP.Auxiliary.VariablesRestrictions"/>
+<fullyQualifiedTypeName name="daa38.CSP.LookBack.GraphBasedBackjumping"/>
 </qualifiedTypeNameHistroy>

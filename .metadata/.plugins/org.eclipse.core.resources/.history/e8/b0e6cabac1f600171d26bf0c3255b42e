@@ -1,0 +1,13 @@
+package daa38.CSP.ValueSelection;
+
+import daa38.CSP.Auxiliary.StepFrame;
+
+public class ForwardChecking implements ValueSelection {
+
+	@Override
+	public void select(StepFrame pSF) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

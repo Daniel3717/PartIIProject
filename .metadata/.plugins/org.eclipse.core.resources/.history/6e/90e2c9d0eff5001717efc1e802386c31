@@ -1,0 +1,38 @@
+package daa38.CSP.LookBack;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
+import daa38.CSP.Auxiliary.StepFrame;
+import daa38.CSP.Auxiliary.Variable;
+
+public class GraphBasedBackjumping implements LookBack {
+
+	Map<Variable, Collection<Variable>> mDeadVars;
+	
+	public GraphBasedBackjumping()
+	{
+		mDeadVars = new HashMap<Variable, Collection<Variable> >();
+	}
+	
+	@Override
+	public int jump(ArrayList<StepFrame> pSteps, int pIndex) {
+		
+		Variable lNowVar = pSteps.get(pIndex).mVar;
+		
+		Collection<Variable> lDeadEnds = mDeadVars.get(lNowVar);
+		
+		if (lDeadEnds == null)
+		{
+			lDeadEnds = new HashSet<Variable>();
+			mDeadVars.put(lNowVar, )
+		}
+		
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

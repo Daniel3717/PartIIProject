@@ -198,16 +198,19 @@ public class MapColouring {
 
 		AuxTimer lT = new AuxTimer();
 		lT.start();
-		for (int lInstance=1;lInstance<50;lInstance++)
+		for (int lInstance=1;lInstance<61;lInstance++)
 		{
+			//DEBUG:
+			System.out.println("I'm at instance "+lInstance);
+			
 			String lMapInPath = "MapColouring/"+lInstance+"_MapIn.txt";
 			String lMapOutPath = "MapColouring/"+lInstance+"_MapOut.txt";
 			String lCSPInPath = "MapColouring/"+lInstance+"_MapCSPIn.txt";
 			String lCSPOutPath = "MapColouring/"+lInstance+"_MapCSPOut.txt";
 			
-			int[][] lMap = generateMap(lInstance,4*lInstance);
+			//int[][] lMap = generateMap(lInstance,4*lInstance);
 			
-			MapColouringFileHandler.writeMap(lMapInPath, lMap);
+			//MapColouringFileHandler.writeMap(lMapInPath, lMap);
 			
 			int[][] lMapRead = MapColouringFileHandler.readMap(lMapInPath);
 			

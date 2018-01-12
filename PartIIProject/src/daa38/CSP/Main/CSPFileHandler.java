@@ -50,9 +50,23 @@ public class CSPFileHandler {
 			
 			Variable lVar1 = lIntToVarMap.get(lVarIndex1);
 			Variable lVar2 = lIntToVarMap.get(lVarIndex2);
+
 			
-			lVar1.mConstraints.add(lNewCon);
-			lVar2.mConstraints.add(lNewCon);
+			Collection<Constraint> lVar2InVar1 = lVar1.mConstraints.get(lVar2);
+			if (lVar2InVar1 == null)
+			{
+				lVar2InVar1 = new ArrayList<Constraint>();
+				lVar1.mConstraints.put(lVar2, lVar2InVar1);
+			}
+			lVar2InVar1.add(lNewCon);
+
+			Collection<Constraint> lVar1InVar2 = lVar2.mConstraints.get(lVar1);
+			if (lVar1InVar2 == null)
+			{
+				lVar1InVar2 = new ArrayList<Constraint>();
+				lVar2.mConstraints.put(lVar1, lVar1InVar2);
+			}
+			lVar1InVar2.add(lNewCon);
 			
 			lNewCon.mVariable1 = lVar1;
 			lNewCon.mVariable2 = lVar2;
@@ -62,7 +76,7 @@ public class CSPFileHandler {
 			{
 				int lVal1=lProblemInput.nextInt();
 				int lVal2=lProblemInput.nextInt();
-				lNewCon.mValues.add(new PairInts(lVal1,lVal2));
+				lNewCon.addPair(new PairInts(lVal1,lVal2));
 			}
 		}
 		
@@ -126,7 +140,7 @@ public class CSPFileHandler {
 			
 			for (PairInts lPI : lCon.mValues)
 			{
-				lProblemOutput.write("   "+lPI.first+" "+lPI.second);
+				lProblemOutput.write("   "+lPI.getAtIndex(1)+" "+lPI.getAtIndex(2));
 			}
 			
 			lProblemOutput.write("\r\n");
@@ -156,8 +170,8 @@ public class CSPFileHandler {
 		Constraint lCon = new Constraint();
 		lCon.mVariable1=lV1;
 		lCon.mVariable2=lV2;
-		lCon.mValues.add(new PairInts(1,1));
-		lCon.mValues.add(new PairInts(2,2));
+		lCon.addPair(new PairInts(1,1));
+		lCon.addPair(new PairInts(2,2));
 		lCons.add(lCon);
 		
 		writeFileProblem(lPath,lVars,lCons);

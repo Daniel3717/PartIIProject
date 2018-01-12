@@ -1,5 +1,6 @@
 package daa38.CSP.ValueSelection;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -20,43 +21,44 @@ public class ConsistentAssignmentValueSelection extends ValueSelection {
 	
 	protected Map<Integer, VariablesRestrictions> createVariablesRestrictions(Variable pVar)
 	{
-		HashMap<Integer, VariablesRestrictions> lVR = new HashMap<Integer, VariablesRestrictions>();
+		HashMap<Integer, VariablesRestrictions> lMapValToVR = new HashMap<Integer, VariablesRestrictions>();
 		
 		for (Integer lInt : pVar.mDomain)
 		{
-			lVR.put(lInt, new VariablesRestrictions());
+			lMapValToVR.put(lInt, new VariablesRestrictions());
 		}
 		
-		for (Constraint lCon : pVar.mConstraints)
+		
+		for (Collection<Constraint> lConColl : pVar.mConstraints.values())
 		{
-			int lNowIndex=0;
-			Variable lOtherVar;
-			if (lCon.mVariable1==pVar)
+			for (Constraint lCon : lConColl)
 			{
-				lNowIndex = 1;
-				lOtherVar = lCon.mVariable2;
-			}
-			else
-			{
-				lNowIndex = 2;
-				lOtherVar = lCon.mVariable1;
-			}
-			
-			if (lOtherVar.mValue == null)
-			{
-				for (PairInts lPI : lCon.mValues)
+				int lIndex = lCon.getIndex(pVar);
+				Variable lOtherVar = lCon.otherVar(pVar);
+				int lOtherIndex = lCon.getIndex(lOtherVar);
+				
+				if (lOtherVar.mValue == null)
 				{
-					if (lOtherVar.mDomain.contains(lPI.getAtIndex(3-lNowIndex)))
+					for (PairInts lPI : lCon.mValues)
 					{
-						if (lVR.get(lPI.getAtIndex(lNowIndex))!=null)
-							lVR.get(lPI.getAtIndex(lNowIndex)).addRestriction(lOtherVar, lPI.getAtIndex(3-lNowIndex));
+						VariablesRestrictions lNowVR = lMapValToVR.get(lPI.getAtIndex(lIndex));
+						//First check the HashMap, which is faster than whatever Collection is at lOtherVar.mDomain
+						if (lNowVR != null) 
+						{
+							//this means that lPI.getAtIndex(lIndex) is a value in pVar's domain
+							//I'm using it with the HashMap since I have no guarantees on what pVar's domain is
+							if (lOtherVar.mDomain.contains(lPI.getAtIndex(lOtherIndex)))
+							{
+								lNowVR.addRestriction(lOtherVar, lPI.getAtIndex(lOtherIndex));
+							}
+						}
 					}
 				}
+				
 			}
-			
 		}
 		
-		return lVR;
+		return lMapValToVR;
 		
 	}
 	

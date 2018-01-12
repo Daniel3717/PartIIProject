@@ -2,6 +2,7 @@ package daa38.CSP.Main;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import daa38.CSP.Auxiliary.Constraint;
 import daa38.CSP.Auxiliary.StepFrame;
@@ -11,6 +12,7 @@ import daa38.CSP.LookBack.Backtrack;
 import daa38.CSP.LookBack.GaschnigsBackjumping;
 import daa38.CSP.LookBack.GraphBasedBackjumping;
 import daa38.CSP.LookBack.LookBack;
+import daa38.CSP.ValueSelection.ArcConsistency;
 import daa38.CSP.ValueSelection.ConsistentAssignmentValueSelection;
 import daa38.CSP.ValueSelection.ForwardChecking;
 import daa38.CSP.ValueSelection.ValueSelection;
@@ -37,7 +39,7 @@ public class Solver {
 	public ArrayList<Variable> mVarsLeft;
 	
 	public void solve(String pFileIn, String pFileOut) throws IOException
-	{
+	{	
 		mSteps = new ArrayList<StepFrame>();
 		mVariables = new ArrayList<Variable>();
 		mConstraints = new ArrayList<Constraint>();
@@ -46,12 +48,13 @@ public class Solver {
 
 		CSPFileHandler.readFileProblem(pFileIn, mVariables, mConstraints);
 		
-		//VariableOrdering lVO = new RandomVariableOrdering(this);
+		VariableOrdering lVO = new RandomVariableOrdering(this);
 		//VariableOrdering lVO = new LeastConstrainedVariableOrdering(this);
-		VariableOrdering lVO = new MostConstrainedVariableOrdering(this);
+		//VariableOrdering lVO = new MostConstrainedVariableOrdering(this);
 		
 		//ValueSelection lVS = new ConsistentAssignmentValueSelection(this);
 		ValueSelection lVS = new ForwardChecking(this);
+		//ValueSelection lVS = new ArcConsistency(this);
 		
 		LookBack lLB = new Backtrack(this);
 		//LookBack lLB = new GaschnigsBackjumping(this);
@@ -61,14 +64,15 @@ public class Solver {
 		
 		if (lStaticOrdering)
 		{
-			mVarsLeft = (ArrayList<Variable>) mVariables.clone();
+			ArrayList<Variable> mAuxVars = (ArrayList<Variable>) mVariables.clone();
 			
-			while (!mVarsLeft.isEmpty())
+			while (!mAuxVars.isEmpty())
 			{
-				Variable lNextVar = lVO.order(mVarsLeft);
-				mSteps.add(new StepFrame(lNextVar));
-				mVarsLeft.remove(lNextVar);
+				Variable lNextVar = lVO.order(mAuxVars);
+				mVarsLeft.add(lNextVar);
+				mAuxVars.remove(lNextVar);
 			}
+			Collections.reverse(mVarsLeft);
 			
 			/*
 			//DEBUG: variable order
@@ -83,9 +87,15 @@ public class Solver {
 			System.out.println();
 			*/
 		}
-
-		mVarsLeft = (ArrayList<Variable>) mVariables.clone();
+		else
+		{
+			mVarsLeft = (ArrayList<Variable>) mVariables.clone();
+		}
 		
+		for (int lIt = 0; lIt<mVariables.size(); lIt++)
+		{
+			mSteps.add(new StepFrame());
+		}
 		
 		int lIndex = 0;
 		//if lIndex reaches mSteps.size(), then we have a solution
@@ -94,14 +104,21 @@ public class Solver {
 		{
 			StepFrame lNowFrame = mSteps.get(lIndex);
 			
-			/*
-			//DEBUG:
-			System.out.println();
-			System.out.println("Index: "+lIndex+" (while mSteps.size()=="+mSteps.size()+")");
-			lNowFrame.outputFrame();
-			System.out.println();
-			*/
 			
+			//DEBUG:
+			//lNowFrame.outputFrame();
+			
+
+			if (lNowFrame.mVar == null)
+			{
+				if (lStaticOrdering)
+				{
+					Variable lNextVar = mVarsLeft.remove(mVarsLeft.size()-1);
+					lNowFrame.mVar = lNextVar;
+					mVarsAssigned.add(lNextVar);
+				}
+			}
+			else
 			if (lNowFrame.mNowValIndex==-1)
 			{
 				lVS.select(lNowFrame);
@@ -126,12 +143,6 @@ public class Solver {
 			if (lNowFrame.mNowValIndex < lNowFrame.mValsToGo.size())
 			{
 				mSteps.get(lIndex).assignValue();
-				
-				//We have assigned a variable, so we must update mVarsAssigned and mVarsLeft
-				Variable lVarAssigned = mSteps.get(lIndex).mVar;
-				mVarsAssigned.add(lVarAssigned);
-				mVarsLeft.remove(lVarAssigned);
-				
 				
 				lIndex++;
 				
@@ -184,8 +195,8 @@ public class Solver {
 		AuxTimer lT = new AuxTimer();
 		lT.start();
 		
-		String lFileIn = "nQueens/8_nQueensCSP_problem.txt";
-		String lFileOut = "nQueens/8_nQueensCSP_solution.txt";
+		String lFileIn = "nQueens/4_nQueensCSP_problem.txt";
+		String lFileOut = "nQueens/4_nQueensCSP_solution.txt";
 		
 		//String lFileIn = "1_problem.txt";
 		//String lFileOut = "1_solution.txt";

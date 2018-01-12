@@ -1,0 +1,77 @@
+package daa38.CSP.Auxiliary;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+
+public class Constraint {
+	public Variable mVariable1;
+	public Variable mVariable2;
+	
+	//I need to make this public so one can iterate over it
+	//But for any addition, addPair should be used
+	//Since addPair also updates the Maps
+	public Collection<PairInts> mValues;
+	
+	private Map<Integer, Collection<Integer> > mVal1ToVals;
+	private Map<Integer, Collection<Integer> > mVal2ToVals;
+	
+	public Constraint()
+	{
+		mVariable1 = new Variable();
+		mVariable2 = new Variable();
+		mValues = new ArrayList<PairInts>();
+	}
+	
+	public Variable otherVar(Variable pVar)
+	{
+		if (pVar==mVariable1)
+		{
+			return mVariable2;
+		}
+		
+		if (pVar==mVariable2)
+		{
+			return mVariable1;
+		}
+		
+		//ERROR:
+		System.out.println("Constraint.otherVar was called with an invalid argument, returning null");
+		return null;
+	}
+	
+	public int getIndex(Variable pVar)
+	{
+		if (pVar==mVariable1)
+		{
+			return 1;
+		}
+		if (pVar==mVariable2)
+		{
+			return 2;	
+		}
+		
+		//ERROR:
+		System.out.println("Constraint.getIndex was called with an invalid argument, returning 0");
+		return 0;
+	}
+	
+	public void addPair(PairInts lPI)
+	{
+		mValues.add(lPI);
+		
+		int lVal1 = lPI.getAtIndex(1);
+		int lVal2 = lPI.getAtIndex(2);
+		
+		Collection<Integer> lValsOfVal1;
+		lValsOfVal1 = mVal1ToVals.get(lVal1);
+		if (lValsOfVal1 == null)
+		{
+			lValsOfVal1 = new HashSet<Integer>();
+			mVal1ToVals2.put(lVal1, lValsOfVal1);
+		}
+		lValsOfVal1.add(lVal2);
+		
+	}
+}

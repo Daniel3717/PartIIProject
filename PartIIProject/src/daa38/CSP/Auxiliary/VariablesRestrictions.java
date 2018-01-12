@@ -17,18 +17,28 @@ public class VariablesRestrictions {
 	// Theoretically should never return false. Will implement error throwing later on this one.
 	public boolean enforceRestrictions()
 	{
+		
 		boolean lBadEnforce = false;
 		for (Map.Entry<Variable, Collection<Integer> > lVR : mVRs.entrySet())
 		{
 			Variable lVar = lVR.getKey();
+			
 			for (Integer lInt : lVR.getValue())
 			{
 				if (!lVar.mDomain.remove(lInt))
+				{
 					lBadEnforce = true;
+				}
 			}
 		}
 		
-		return (!lBadEnforce);
+		if (lBadEnforce)
+		{
+			//ERROR:
+			System.out.println("Bad enforce");
+		}
+		
+		return (lBadEnforce);
 	}
 	
 	// POSSIBLE TIME EFFICIENCY IMPROVEMENT IF I DO NOT CHECK WHETHER THE DOMAIN CONTAINS THE VALUE
@@ -36,42 +46,86 @@ public class VariablesRestrictions {
 	// Theoretically should never return false. Will implement error throwing later on this one.
 	public boolean liftRestrictions()
 	{
+		
 		boolean lBadLift = false;
 		for (Map.Entry<Variable, Collection<Integer> > lVR : mVRs.entrySet())
 		{
 			Variable lVar = lVR.getKey();
+			
 			for (Integer lInt : lVR.getValue())
 			{
 				if (lVar.mDomain.contains(lInt))
+				{
 					lBadLift = true;
+				}
 				else
+				{	
 					lVar.mDomain.add(lInt);
+				}
 			}
 		}
 		
-		return (!lBadLift);
+		if (lBadLift)
+		{
+			//ERROR:
+			System.out.println("Bad lift");
+		}
+		
+		return (lBadLift);
 	}
 	
 	//Overrides current restrictions for pVar
+	//pRestrictions must be non-zero
 	public void overrideRestrictions(Variable pVar, Collection<Integer> pRestrictions)
 	{
+		if (pRestrictions.size()==0)
+		{
+			//ERROR:
+			System.out.println("Tried to add a zero-sized Collection of Restrictions "
+					+ "with VariablesRestrictions.overrideRestrictions");
+		}
+		
 		mVRs.put(pVar, pRestrictions);
 	}
 	
-	//Adds to/creates restrictions for pVar
+	//Adds to/creates a restriction for pVar
 	public void addRestriction(Variable pVar, Integer pRestriction)
 	{
 		Collection<Integer> lRestrictions = mVRs.get(pVar);
 		if (lRestrictions==null)
 		{
-			ArrayList<Integer> lNewRestrictions = new ArrayList<Integer>();
-			lNewRestrictions.add(pRestriction);
-			mVRs.put(pVar, lNewRestrictions);
+			lRestrictions = new ArrayList<Integer>();
+			mVRs.put(pVar, lRestrictions);
 		}
-		else
+		lRestrictions.add(pRestriction);
+	}
+	
+	//Adds to/creates restrictions for pVar
+	//pRestrictions must be non-zero in size
+	//It's more efficient than calling addRestriction multiple times since
+	//we have only one mVRs.get call
+	public void addRestrictions(Variable pVar, Collection<Integer> pRestrictions)
+	{
+		if (pRestrictions.size()==0)
 		{
-			lRestrictions.add(pRestriction);
+			//ERROR:
+			System.out.println("Tried to add a zero-sized Collection of Restrictions "
+					+ "with VariablesRestrictions.addRestrictions");
 		}
+		
+		
+		Collection<Integer> lRestrictions = mVRs.get(pVar);
+		if (lRestrictions==null)
+		{
+			lRestrictions = new ArrayList<Integer>();
+			mVRs.put(pVar, lRestrictions);
+		}
+		
+		for (Integer lInt : pRestrictions)
+		{
+			lRestrictions.add(lInt);
+		}
+		
 	}
 	
 	public Collection<Integer> getVarRestrictions(Variable pVar)

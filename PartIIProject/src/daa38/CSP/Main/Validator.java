@@ -38,7 +38,7 @@ public class Validator {
 		{
 			for (PairInts lPair : lCon.mValues)
 			{
-				if ((lCon.mVariable1.mValue==lPair.first)&&(lCon.mVariable2.mValue==lPair.second))
+				if ((lCon.mVariable1.mValue==lPair.getAtIndex(1))&&(lCon.mVariable2.mValue==lPair.getAtIndex(2)))
 				{
 					System.out.println(lCon.mVariable1.mName+" and "+lCon.mVariable2.mName+
 							" cannot have values ("+lCon.mVariable1.mValue+","+lCon.mVariable2.mValue+")");

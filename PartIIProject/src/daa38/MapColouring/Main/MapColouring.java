@@ -102,8 +102,27 @@ public class MapColouring {
 					lCon.mVariable2 = lVarNext;
 					lCon.mValues = (ArrayList<PairInts>) lGenericPairInts.clone();
 					
-					lVarNow.mConstraints.add(lCon);
-					lVarNext.mConstraints.add(lCon);
+					
+					Collection<Constraint> lVarNextInVarNow = lVarNow.mConstraints.get(lVarNext);
+					if (lVarNextInVarNow == null)
+					{
+						lVarNextInVarNow = new ArrayList<Constraint>();
+						lVarNow.mConstraints.put(lVarNext, lVarNextInVarNow);
+					}
+					lVarNextInVarNow.add(lCon);
+
+					Collection<Constraint> lVarNowInVarNext = lVarNext.mConstraints.get(lVarNow);
+					if (lVarNowInVarNext == null)
+					{
+						lVarNowInVarNext = new ArrayList<Constraint>();
+						lVarNext.mConstraints.put(lVarNow, lVarNowInVarNext);
+					}
+					lVarNowInVarNext.add(lCon);
+					
+					
+					//lVarNow.mConstraints.add(lCon);
+					//lVarNext.mConstraints.add(lCon);
+					
 					pCons.add(lCon);
 				}
 			}
@@ -198,7 +217,7 @@ public class MapColouring {
 
 		AuxTimer lT = new AuxTimer();
 		lT.start();
-		for (int lInstance=1;lInstance<61;lInstance++)
+		for (int lInstance=1;lInstance<101;lInstance++)
 		{
 			//DEBUG:
 			System.out.println("I'm at instance "+lInstance);
@@ -249,14 +268,14 @@ public class MapColouring {
 			
 			MapColouringFileHandler.writeMap(lMapOutPath, lColourMap);
 			
-			/*
+			
 			//Checker should always return true in our case
 			//P.S.: I have tested it on wrong colourings made by hand and it does return false when it should
 			System.out.println("Checker returns: "+checkMapColouring(lMapInPath,lMapOutPath));
 			System.out.println();
-			System.out.println();
-			System.out.println();
-			*/
+			//System.out.println();
+			//System.out.println();
+			
 		}
 		lT.stop();
 		lT.show();

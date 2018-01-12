@@ -45,16 +45,16 @@ public class NQueens {
 				lCon.mVariable1 = lITV.get(lRow1);
 				lCon.mVariable2 = lITV.get(lRow2);
 				
-				for (int lInt = 0; lInt<pNrQueens; lInt++)
+				for (int lInt = 0; lInt < pNrQueens; lInt++)
 				{
-					lCon.mValues.add(new PairInts(lInt,lInt));
+					lCon.addPair(new PairInts(lInt,lInt));
 				}
 				
-				int lDif = lRow2-lRow1;
-				for (int lInt = 0; lInt+lDif<pNrQueens; lInt++)
+				int lDif = lRow2 - lRow1;
+				for (int lInt = 0; lInt+lDif < pNrQueens; lInt++)
 				{
-					lCon.mValues.add(new PairInts(lInt,lInt+lDif));
-					lCon.mValues.add(new PairInts(lInt+lDif,lInt));
+					lCon.addPair(new PairInts(lInt,lInt+lDif));
+					lCon.addPair(new PairInts(lInt+lDif,lInt));
 				}
 				
 				pCons.add(lCon);
@@ -147,7 +147,7 @@ public class NQueens {
 		AuxTimer lT = new AuxTimer();
 		lT.start();
 		
-		for (int lInstance=4;lInstance<=40;lInstance++)
+		for (int lInstance=4;lInstance<61;lInstance++)
 		{
 			ArrayList<Variable> lVars = new ArrayList<Variable>();
 			ArrayList<Constraint> lCons = new ArrayList<Constraint>();
@@ -155,8 +155,8 @@ public class NQueens {
 			int NUMBER_OF_QUEENS = lInstance;
 			
 			String lCSPProblemPath = "nQueens/"+lInstance+"_nQueensCSP_problem.txt";
-			generateCSP(NUMBER_OF_QUEENS,lVars,lCons);
-			CSPFileHandler.writeFileProblem(lCSPProblemPath, lVars, lCons);
+			//generateCSP(NUMBER_OF_QUEENS,lVars,lCons);
+			//CSPFileHandler.writeFileProblem(lCSPProblemPath, lVars, lCons);
 			
 			String lCSPSolutionPath = "nQueens/"+lInstance+"_nQueensCSP_solution.txt";
 			Solver lS = new Solver();

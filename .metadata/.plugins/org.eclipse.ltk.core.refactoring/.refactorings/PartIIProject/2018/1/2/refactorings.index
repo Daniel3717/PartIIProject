@@ -1,2 +1,5 @@
 1515510764662	Rename field 'mIndex'
 1515580210919	Rename field 'mDeadVars'
+1515781712314	Rename local variable 'lVarNowCollInVarNextMap'
+1515781740812	Rename local variable 'lVar2CollInVar1Map'
+1515781748330	Rename local variable 'lVar1CollInVar2Map'

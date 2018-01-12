@@ -1,0 +1,20 @@
+package daa38.CSP.LookBack;
+
+import java.util.ArrayList;
+
+import daa38.CSP.Auxiliary.StepFrame;
+import daa38.CSP.Main.Solver;
+
+public abstract class LookBack {
+	
+	protected Solver mSolver;
+	
+	protected LookBack(Solver pSolver)
+	{
+		mSolver=pSolver;
+	}
+	
+	//It returns the index to which it jumps
+	//It also modifies the mSteps of the mSolver
+	public abstract int jump(int pIndex);
+}

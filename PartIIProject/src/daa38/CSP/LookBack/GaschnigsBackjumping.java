@@ -4,9 +4,15 @@ import java.util.ArrayList;
 
 import daa38.CSP.Auxiliary.StepFrame;
 import daa38.CSP.Auxiliary.Variable;
+import daa38.CSP.Main.Solver;
 
 public class GaschnigsBackjumping extends Backtrack {
 
+	public GaschnigsBackjumping(Solver pSolver)
+	{
+		super(pSolver);
+	}
+	
 	@Override
 	public int jump(ArrayList<StepFrame> pSteps, int pIndex) {
 		

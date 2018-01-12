@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+import daa38.CSP.Auxiliary.AuxTimer;
 import daa38.CSP.Auxiliary.Constraint;
 import daa38.CSP.Auxiliary.PairInts;
 import daa38.CSP.Auxiliary.Variable;
@@ -92,6 +93,7 @@ public class NQueens {
 	
 	public static boolean nQueensCheckMatrix(int[][] pMatrix)
 	{	
+		
 		int lNrQueens = 0;
 		int lSize = pMatrix.length;
 		for (int lRow = 0; lRow<lSize; lRow++)
@@ -141,6 +143,9 @@ public class NQueens {
 	}
 
 	public static void main(String[] args) throws IOException {
+
+		AuxTimer lT = new AuxTimer();
+		lT.start();
 		
 		for (int lInstance=4;lInstance<=40;lInstance++)
 		{
@@ -172,6 +177,10 @@ public class NQueens {
 			
 			System.out.println(lInstance+" "+NQueensFileHandler.nQueensCheckFile(lNQueensSolutionPath));
 		}
+		
+
+		lT.stop();
+		lT.show();
 	}
 
 }

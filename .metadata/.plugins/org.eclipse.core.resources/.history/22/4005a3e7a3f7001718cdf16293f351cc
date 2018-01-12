@@ -1,0 +1,10 @@
+package daa38.CSP.ValueSelection;
+
+import java.util.Collection;
+
+import daa38.CSP.Auxiliary.StepFrame;
+import daa38.CSP.Auxiliary.Variable;
+
+public interface ValueSelection {
+	public void select(StepFrame pSF, Collection<Variable> pVarsLeft);
+}

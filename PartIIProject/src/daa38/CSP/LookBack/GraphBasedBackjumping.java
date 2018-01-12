@@ -8,13 +8,15 @@ import java.util.Map;
 
 import daa38.CSP.Auxiliary.StepFrame;
 import daa38.CSP.Auxiliary.Variable;
+import daa38.CSP.Main.Solver;
 
-public class GraphBasedBackjumping implements LookBack {
+public class GraphBasedBackjumping extends LookBack {
 
 	Map<Variable, Collection<Variable>> mVarToDeadEnds;
 	
-	public GraphBasedBackjumping()
+	public GraphBasedBackjumping(Solver pSolver)
 	{
+		super(pSolver);
 		mVarToDeadEnds = new HashMap<Variable, Collection<Variable> >();
 	}
 	

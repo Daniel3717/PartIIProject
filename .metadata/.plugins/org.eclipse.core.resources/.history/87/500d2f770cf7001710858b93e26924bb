@@ -1,0 +1,45 @@
+package daa38.CSP.ValueSelection;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import daa38.CSP.Auxiliary.StepFrame;
+import daa38.CSP.Auxiliary.Variable;
+import daa38.CSP.Auxiliary.VariablesRestrictions;
+
+public class ForwardChecking extends ConsistentAssignmentValueSelection {
+
+	@Override
+	public void select(StepFrame pSF) {
+		Variable lNowVar = pSF.mVar;
+		
+		Map<Integer, VariablesRestrictions> lAllVR = super.createVariablesRestrictions(lNowVar);
+		
+		for (Entry<Integer, VariablesRestrictions> lEntryAllVR : lAllVR.entrySet())
+		{
+			Integer lInt = lEntryAllVR.getKey();
+			VariablesRestrictions lOneVR = lEntryAllVR.getValue();
+			Map<Variable, Collection<Integer> > lVarToRes = lOneVR.getAllRestrictions();
+			
+			boolean lFoundEmptyDomain = false;
+			for (Entry<Variable, Collection<Integer> > lEntryRes : lVarToRes.entrySet())
+			{
+				if (lEntryRes.getKey().mDomain.size() == lEntryRes.getValue().size())
+				{
+					lFoundEmptyDomain = true;
+					break;
+				}
+			}
+			
+			if (!lFoundEmptyDomain)
+			{
+				
+			}
+			
+		}
+
+	}
+
+}

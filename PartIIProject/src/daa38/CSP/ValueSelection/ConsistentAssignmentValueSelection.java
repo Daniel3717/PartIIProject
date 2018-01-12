@@ -1,17 +1,24 @@
 package daa38.CSP.ValueSelection;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import daa38.CSP.Auxiliary.Constraint;
 import daa38.CSP.Auxiliary.PairInts;
 import daa38.CSP.Auxiliary.StepFrame;
 import daa38.CSP.Auxiliary.Variable;
 import daa38.CSP.Auxiliary.VariablesRestrictions;
+import daa38.CSP.Main.Solver;
 
-public class ConsistentAssignmentValueSelection implements ValueSelection {
-
-	protected HashMap<Integer, VariablesRestrictions> createVariablesRestrictions(Variable pVar)
+public class ConsistentAssignmentValueSelection extends ValueSelection {
+	
+	public ConsistentAssignmentValueSelection(Solver pSolver)
+	{
+		super(pSolver);
+	}
+	
+	protected Map<Integer, VariablesRestrictions> createVariablesRestrictions(Variable pVar)
 	{
 		HashMap<Integer, VariablesRestrictions> lVR = new HashMap<Integer, VariablesRestrictions>();
 		
@@ -57,12 +64,12 @@ public class ConsistentAssignmentValueSelection implements ValueSelection {
 	public void select(StepFrame pSF) {
 		Variable lNowVar = pSF.mVar;
 		
-		HashMap<Integer, VariablesRestrictions> lVR = createVariablesRestrictions(lNowVar);
+		Map<Integer, VariablesRestrictions> lVR = createVariablesRestrictions(lNowVar);
 		
-		for (Integer lInt : lNowVar.mDomain)
+		for (Entry<Integer, VariablesRestrictions> lEntry : lVR.entrySet())
 		{
-			pSF.mValsToGo.add(lInt);
-			pSF.mRes.add(lVR.get(lInt));
+			pSF.mValsToGo.add(lEntry.getKey());
+			pSF.mRes.add(lEntry.getValue());
 		}
 		
 		pSF.mNowValIndex = 0;

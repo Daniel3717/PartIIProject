@@ -3,11 +3,18 @@ package daa38.CSP.LookBack;
 import java.util.ArrayList;
 
 import daa38.CSP.Auxiliary.StepFrame;
+import daa38.CSP.Main.Solver;
 
-public class Backtrack implements LookBack {
+public class Backtrack extends LookBack {
 
+	public Backtrack(Solver pSolver)
+	{
+		super(pSolver);
+	}
+	
 	@Override
 	public int jump(ArrayList<StepFrame> pSteps, int pIndex) {
+		
 		pSteps.get(pIndex).resetFrame();
 		pIndex--;
 		

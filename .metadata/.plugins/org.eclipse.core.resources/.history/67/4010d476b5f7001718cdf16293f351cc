@@ -1,0 +1,20 @@
+package daa38.CSP.VariableOrdering;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+import daa38.CSP.Auxiliary.Variable;
+
+public class RandomVariableOrdering extends VariableOrdering {
+
+	public RandomVariableOrdering(Solver pSolver)
+	{
+		super(pSolver);
+	}
+	
+	@Override
+	public Variable order(ArrayList<Variable> pVars) {
+		Collections.shuffle(pVars);
+	}
+
+}

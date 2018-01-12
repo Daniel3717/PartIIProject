@@ -12,6 +12,7 @@ import daa38.CSP.LookBack.GaschnigsBackjumping;
 import daa38.CSP.LookBack.GraphBasedBackjumping;
 import daa38.CSP.LookBack.LookBack;
 import daa38.CSP.ValueSelection.ConsistentAssignmentValueSelection;
+import daa38.CSP.ValueSelection.ForwardChecking;
 import daa38.CSP.ValueSelection.ValueSelection;
 import daa38.CSP.VariableOrdering.LeastConstrainedVariableOrdering;
 import daa38.CSP.VariableOrdering.MostConstrainedVariableOrdering;
@@ -24,37 +25,66 @@ public class Solver {
 	
 	public ArrayList<Variable> mVariables;
 	public ArrayList<Constraint> mConstraints;
-
-	public Solver()
-	{
-		mSteps = new ArrayList<StepFrame>();
-		mVariables = new ArrayList<Variable>();
-		mConstraints = new ArrayList<Constraint>();
-	}
+	
+	//The mVarsAssigned and mVarsLeft is a service provided by the solver
+	//Thus, the solver is responsible for maintaining those
+	
+	//mVarsAssigned is always in the order the Variables are assigned
+	public ArrayList<Variable> mVarsAssigned;
+	
+	//mVarsLeft will be in reverse order in which the Variables will be assigned in case of static variable ordering
+	//mVarsLeft will be in no specific order in the case of dynamic variable ordering
+	public ArrayList<Variable> mVarsLeft;
 	
 	public void solve(String pFileIn, String pFileOut) throws IOException
 	{
 		mSteps = new ArrayList<StepFrame>();
 		mVariables = new ArrayList<Variable>();
 		mConstraints = new ArrayList<Constraint>();
+		mVarsAssigned = new ArrayList<Variable>();
+		mVarsLeft = new ArrayList<Variable>();
 
 		CSPFileHandler.readFileProblem(pFileIn, mVariables, mConstraints);
 		
-		VariableOrdering lVO = new RandomVariableOrdering();
-		//VariableOrdering lVO = new LeastConstrainedVariableOrdering();
-		//VariableOrdering lVO = new MostConstrainedVariableOrdering();
+		//VariableOrdering lVO = new RandomVariableOrdering(this);
+		//VariableOrdering lVO = new LeastConstrainedVariableOrdering(this);
+		VariableOrdering lVO = new MostConstrainedVariableOrdering(this);
 		
-		ValueSelection lVS = new ConsistentAssignmentValueSelection();
+		//ValueSelection lVS = new ConsistentAssignmentValueSelection(this);
+		ValueSelection lVS = new ForwardChecking(this);
 		
-		LookBack lLB = new Backtrack();
-		//LookBack lLB = new GaschnigsBackjumping();
-		//LookBack lLB = new GraphBasedBackjumping();
+		LookBack lLB = new Backtrack(this);
+		//LookBack lLB = new GaschnigsBackjumping(this);
+		//LookBack lLB = new GraphBasedBackjumping(this);
 		
-		lVO.order(mVariables);
-		for (Variable lV : mVariables)
+		boolean lStaticOrdering = true;
+		
+		if (lStaticOrdering)
 		{
-			mSteps.add(new StepFrame(lV));
+			mVarsLeft = (ArrayList<Variable>) mVariables.clone();
+			
+			while (!mVarsLeft.isEmpty())
+			{
+				Variable lNextVar = lVO.order(mVarsLeft);
+				mSteps.add(new StepFrame(lNextVar));
+				mVarsLeft.remove(lNextVar);
+			}
+			
+			/*
+			//DEBUG: variable order
+			System.out.println("Variable order (name,nr of values,nr of constraints):");
+			for (StepFrame lSF : mSteps)
+			{
+				System.out.print("("+lSF.mVar.mName);
+				System.out.print(","+lSF.mVar.mDomain.size());
+				System.out.print(","+lSF.mVar.mConstraints.size());
+				System.out.print(") ");
+			}
+			System.out.println();
+			*/
 		}
+
+		mVarsLeft = (ArrayList<Variable>) mVariables.clone();
 		
 		
 		int lIndex = 0;
@@ -63,11 +93,14 @@ public class Solver {
 		while ( (lIndex<mSteps.size()) && (lIndex > -1) )
 		{
 			StepFrame lNowFrame = mSteps.get(lIndex);
+			
+			/*
 			//DEBUG:
-			//System.out.println();
-			//System.out.println("Index: "+lIndex+" (while mSteps.size()=="+mSteps.size()+")");
-			//lNowFrame.outputFrame();
-			//System.out.println();
+			System.out.println();
+			System.out.println("Index: "+lIndex+" (while mSteps.size()=="+mSteps.size()+")");
+			lNowFrame.outputFrame();
+			System.out.println();
+			*/
 			
 			if (lNowFrame.mNowValIndex==-1)
 			{
@@ -76,14 +109,32 @@ public class Solver {
 				if (lNowFrame.mValsToGo.size()==0) 
 				{
 					//so this is a (leaf) dead end
-					lIndex = lLB.jump(mSteps, lIndex);
+					
+					int lPrevIndex = lIndex;
+					
+					lIndex = lLB.jump(mSteps,lIndex);
+					
+					//We have deassigned variables, so we must update mVarsAssigned and mVarsLeft
+					for (int lInt = lPrevIndex; lInt>lIndex; lInt--)
+					{
+						Variable lVarNow = mVarsAssigned.remove(mVarsAssigned.size()-1);
+						mVarsLeft.add(lVarNow);
+					}
 				}
 			}
 			else
 			if (lNowFrame.mNowValIndex < lNowFrame.mValsToGo.size())
 			{
 				mSteps.get(lIndex).assignValue();
+				
+				//We have assigned a variable, so we must update mVarsAssigned and mVarsLeft
+				Variable lVarAssigned = mSteps.get(lIndex).mVar;
+				mVarsAssigned.add(lVarAssigned);
+				mVarsLeft.remove(lVarAssigned);
+				
+				
 				lIndex++;
+				
 				if (lIndex < mSteps.size())
 				{
 					mSteps.get(lIndex).resetFrame();
@@ -92,7 +143,17 @@ public class Solver {
 			else //Finished checking all values for current variable
 			{
 				//so this is a (internal) dead end
+
+				int lPrevIndex = lIndex;
+				
 				lIndex = lLB.jump(mSteps, lIndex);
+
+				//We have deassigned variables, so we must update mVarsAssigned and mVarsLeft
+				for (int lInt = lPrevIndex; lInt>lIndex; lInt--)
+				{
+					Variable lVarNow = mVarsAssigned.remove(mVarsAssigned.size()-1);
+					mVarsLeft.add(lVarNow);
+				}
 			}
 		}
 		

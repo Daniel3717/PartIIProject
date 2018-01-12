@@ -4,16 +4,28 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import daa38.CSP.Auxiliary.Variable;
+import daa38.CSP.Main.Solver;
 
 
 
-public class LeastConstrainedVariableOrdering extends MostConstrainedVariableOrdering {
+public class LeastConstrainedVariableOrdering extends VariableOrdering {
 
+	public LeastConstrainedVariableOrdering(Solver pSolver)
+	{
+		super(pSolver);
+	}
+	
 	//Basically, we do MostConstrainedVariableOrdering, then reverse the result
 	@Override
-	public void order(ArrayList<Variable> pVars) {
-		super.order(pVars);
-		Collections.reverse(pVars);
+	public Variable order(ArrayList<Variable> pVars) {
+
+		ArrayList<VCV> mOrder = new ArrayList<VCV>();
+		for (Variable lV : pVars)
+		{
+			mOrder.add(new VCV(lV.mDomain.size(),lV.mConstraints.size(),lV));
+		}
+		
+		return (Collections.min(mOrder).mVariable);
 	}
 
 }

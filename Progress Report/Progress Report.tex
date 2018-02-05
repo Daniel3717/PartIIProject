@@ -1,0 +1,62 @@
+% Note: this file can be compiled on its own, but is also included by
+% diss.tex (using the docmute.sty package to ignore the preamble)
+\documentclass[12pt,a4paper,twoside]{article}
+\usepackage[pdfborder={0 0 0}]{hyperref}
+\usepackage[margin=25mm]{geometry}
+\usepackage{graphicx}
+\usepackage{parskip}
+\begin{document}
+	\begin{center}
+	\Large
+	Computer Science Tripos -- Part II -- Progress Report\\[4mm]
+	\LARGE
+	Comparison of CSP-solving algorithms
+	
+	\large
+	D-A. Aleca, Homerton College
+	\end{center}
+	
+	\vspace{5mm}
+	
+	\textbf{Project Supervisor:} Dr Sean Holden 
+	
+	\textbf{Director of Studies:} Dr John Fawcett
+	
+	\textbf{Project Overseers:} Ross Anderson  \& Jean Bacon
+	
+	\section*{Work completed}
+	The project is on schedule.\\
+	The work to be done has been split into sub-projects and each one was completed separately. With one exception where slack time was used, sub-projects were finished on time.\\
+	\subsection*{Sub-project: Implement a general CSP-validator}
+	There was some discussion on how the input/output should be formatted. Opted to go with the simplest way available.\\\\
+	\subsection*{Sub-project: Implement a basic bactracking solution for solving CSPs}
+	Attempted to do as much separation into classes as possible for easier individual maintenance on classes further in the project.\\\\
+	\subsection*{Sub-project: n-Queens set}
+	Implemented a n-Queens problem generator (directly in CSP-format), translator from CSP-solution to matrix representation and a validator for the matrix representation.\\
+	There was some difficulty whilst debugging, as at this point variables did not have a name. Opted to introduce a name field in the Variable class.\\\\
+	\subsection*{Sub-project: Map Colouring set}
+	Implemented a Map generator, translators to/from CSP-format and a Map-Colouring validator.\\
+	Some slack time was used for this sub-project, as the laptop has unexpectedly broken down for a few days. There was no loss (there were saves on github and the separate drive) and the laptop was recovered, but progress was slowed down.\\\\
+	\subsection*{Sub-project: Implement CSP-solving algorithms}
+	As the project was done in sprints, there were small modifications to the format of input/output to various functions, particularly at this section. They were recorded in a log.\\\\
+	Including the basic backtracking algorithm heuristics, the following heuristics are available for use:\\\\
+	Look-Ahead Variable Ordering Heuristics:\\
+	--- Random Variable Ordering\\
+	--- Most Constrained Variable\\
+	--- Least Constrained Variable\\
+	- There is also a flag which allows switching between static variable ordering and dynamic variable ordering.\\\\
+	Look-Ahead Value Selection Heuristics:\\
+	--- Consistent Assignment\\
+	--- Forward Checking\\
+	--- Full Look-Ahead\\
+	--- Arc-Consistency\\
+	--- Partial Look-Ahead\\\\
+	Look-Back Heuristics:\\
+	--- Backtrack\\
+	--- Gaschnig's Backjumping\\
+	--- Graph-Based Backjumping\\
+	
+	Due to careful planning and separation of the Heuristics, one extension was also realised:
+	--- Heuristics can be manually mixed to form new Algorithms.\\
+	
+\end{document}

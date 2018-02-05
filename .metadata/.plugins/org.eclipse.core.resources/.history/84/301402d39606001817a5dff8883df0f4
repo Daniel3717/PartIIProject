@@ -1,0 +1,32 @@
+package daa38.Statistics;
+
+import java.util.Collection;
+
+import daa38.CSP.Auxiliary.Variable;
+
+public class Analyser {
+
+	public static int getNrVariables(Collection<Variable> pVars)
+	{
+		return pVars.size();
+	}
+	
+	public static double getAverageDomainSize(Collection<Variable> pVars)
+	{
+		double lAv = 0;
+		
+		for (Variable lVar : pVars)
+		{
+			lAv += lVar.mDomain.size();
+		}
+		
+		lAv = lAv / getNrVariables(pVars);
+		
+		return lAv;
+	}
+	
+	public static double getAverageNrConstraints(Collection<Variable> pVars)
+	{
+		
+	}
+}

@@ -4,6 +4,7 @@ public class AuxTimer {
 	
 	private Long mStartTime = null;
 	private Long mStopTime = null;
+	public Long mLapTime = null;
 	
 	public void start()
 	{
@@ -13,6 +14,8 @@ public class AuxTimer {
 	public void stop()
 	{
 		mStopTime = System.currentTimeMillis();
+		
+		mLapTime = mStopTime-mStartTime;
 	}
 	
 	public void show()
@@ -34,6 +37,6 @@ public class AuxTimer {
 			System.out.println("Timer stopped before started..., but you still get the time");
 		}
 		
-		System.out.println("It took "+((mStopTime-mStartTime))+" milliseconds");
+		System.out.println("It took "+mLapTime+" milliseconds");
 	}
 }

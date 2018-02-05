@@ -13,8 +13,14 @@ import daa38.CSP.Auxiliary.AuxTimer;
 import daa38.CSP.Auxiliary.Constraint;
 import daa38.CSP.Auxiliary.PairInts;
 import daa38.CSP.Auxiliary.Variable;
+import daa38.CSP.LookBack.GraphBasedBackjumping;
+import daa38.CSP.LookBack.LookBack;
 import daa38.CSP.Main.CSPFileHandler;
 import daa38.CSP.Main.Solver;
+import daa38.CSP.ValueSelection.ForwardChecking;
+import daa38.CSP.ValueSelection.ValueSelection;
+import daa38.CSP.VariableOrdering.RandomVariableOrdering;
+import daa38.CSP.VariableOrdering.VariableOrdering;
 import daa38.MapColouring.Auxiliary.IntMatrixElement;
 import daa38.MapColouring.Auxiliary.MatrixPosition;
 import daa38.MapColouring.MapGenerators.ForestMapGenerator;
@@ -217,7 +223,7 @@ public class MapColouring {
 
 		AuxTimer lT = new AuxTimer();
 		lT.start();
-		for (int lInstance=1;lInstance<101;lInstance++)
+		for (int lInstance=109;lInstance<111;lInstance++)
 		{
 			//DEBUG:
 			System.out.println("I'm at instance "+lInstance);
@@ -250,7 +256,12 @@ public class MapColouring {
 			
 			CSPFileHandler.writeFileProblem(lCSPInPath, lVars, lCons);
 			Solver lS = new Solver();
-			lS.solve(lCSPInPath, lCSPOutPath);
+			VariableOrdering lVO = new RandomVariableOrdering(lS);
+			ValueSelection lVS = new ForwardChecking(lS);
+			LookBack lLB = new GraphBasedBackjumping(lS);
+			
+			
+			lS.solve(lCSPInPath, lCSPOutPath, lVO, lVS, lLB);
 			
 			CSPFileHandler.readFileAssignment(lCSPOutPath, lVars);
 			int[][] lColourMap = CSPToMap(lMapRead,lVars);

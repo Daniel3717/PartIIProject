@@ -1,0 +1,57 @@
+package daa38.Statistics;
+
+import java.util.Collection;
+
+import daa38.CSP.Auxiliary.Constraint;
+import daa38.CSP.Auxiliary.Variable;
+import daa38.CSP.Main.CSPFileHandler;
+
+public class Analyser {
+	
+	Collection<Variable> mVars;
+	Collection<Constraint> mCons;
+	
+	public Analyser(String pCSPFile)
+	{
+		CSPFileHandler.readFileProblem(pCSPFile, mVars, mCons);
+	}
+
+	public int getNrVariables()
+	{
+		return mVars.size();
+	}
+	
+	public double getAverageDomainSize(Collection<Variable> mVars)
+	{
+		double lAvDS = 0;
+		
+		for (Variable lVar : mVars)
+		{
+			lAvDS += lVar.mDomain.size();
+		}
+		
+		lAvDS = lAvDS / getNrVariables();
+		
+		return lAvDS;
+	}
+	
+	public double getAverageNrConstraints(Collection<Variable> mVars)
+	{
+		double lAvCon = 0;
+		
+		for (Variable lVar : mVars)
+		{
+			for (Collection<Constraint> lVarCons : lVar.mConstraints.values())
+			{
+				for (Constraint lCon : lVarCons)
+				{
+					lAvCon += lCon.mValues.size();
+				}
+			}
+		}
+		
+		lAvCon = lAvCon / getNrVariables(mVars);
+		
+		return lAvCon;
+	}
+}

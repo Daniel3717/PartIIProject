@@ -1,0 +1,16 @@
+package daa38.Statistics;
+
+public class Analyser {
+
+	public static int getNrVariables(Collection<Variable> pVars)
+	{
+		return pVars.size();
+	}
+	
+	public static double getAverageDomainSize(Collection<Variable> pVars)
+	{
+		double lAv = 0;
+		
+		for (Variable)
+	}
+}

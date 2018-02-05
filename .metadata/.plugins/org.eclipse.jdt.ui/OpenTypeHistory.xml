@@ -4,4 +4,6 @@
 <typeInfo handle="=PartIIProject/src&lt;daa38.CSP.LookBack{LookBack.java[LookBack" modifiers="1025" timestamp="1515768940126"/>
 <typeInfo handle="=PartIIProject/src&lt;daa38.CSP.VariableOrdering{VariableOrdering.java[VariableOrdering" modifiers="1025" timestamp="1515770177768"/>
 <typeInfo handle="=PartIIProject/src&lt;daa38.CSP.ValueSelection{ValueSelection.java[ValueSelection" modifiers="1025" timestamp="1515768999260"/>
+<typeInfo handle="=PartIIProject/src&lt;daa38.CSP.ValueSelection{ArcConsistencyBase.java[ArcConsistencyBase" modifiers="1025" timestamp="1515800932042"/>
+<typeInfo handle="=PartIIProject/src&lt;daa38.CSP.ValueSelection{LookAhead.java[LookAhead" modifiers="1025" timestamp="1515801094260"/>
 </typeInfoHistroy>

@@ -9,8 +9,14 @@ import daa38.CSP.Auxiliary.AuxTimer;
 import daa38.CSP.Auxiliary.Constraint;
 import daa38.CSP.Auxiliary.PairInts;
 import daa38.CSP.Auxiliary.Variable;
+import daa38.CSP.LookBack.GraphBasedBackjumping;
+import daa38.CSP.LookBack.LookBack;
 import daa38.CSP.Main.CSPFileHandler;
 import daa38.CSP.Main.Solver;
+import daa38.CSP.ValueSelection.ForwardChecking;
+import daa38.CSP.ValueSelection.ValueSelection;
+import daa38.CSP.VariableOrdering.RandomVariableOrdering;
+import daa38.CSP.VariableOrdering.VariableOrdering;
 
 public class NQueens {
 
@@ -147,23 +153,28 @@ public class NQueens {
 		AuxTimer lT = new AuxTimer();
 		lT.start();
 		
-		for (int lInstance=4;lInstance<61;lInstance++)
+		for (int lInstance=4;lInstance<101;lInstance++)
 		{
 			ArrayList<Variable> lVars = new ArrayList<Variable>();
 			ArrayList<Constraint> lCons = new ArrayList<Constraint>();
 			
-			int NUMBER_OF_QUEENS = lInstance;
+			int lNrQueens = lInstance;
 			
 			String lCSPProblemPath = "nQueens/"+lInstance+"_nQueensCSP_problem.txt";
-			//generateCSP(NUMBER_OF_QUEENS,lVars,lCons);
-			//CSPFileHandler.writeFileProblem(lCSPProblemPath, lVars, lCons);
+			generateCSP(lNrQueens,lVars,lCons);
+			CSPFileHandler.writeFileProblem(lCSPProblemPath, lVars, lCons);
 			
 			String lCSPSolutionPath = "nQueens/"+lInstance+"_nQueensCSP_solution.txt";
 			Solver lS = new Solver();
-			lS.solve(lCSPProblemPath, lCSPSolutionPath);
+			VariableOrdering lVO = new RandomVariableOrdering(lS);
+			ValueSelection lVS = new ForwardChecking(lS);
+			LookBack lLB = new GraphBasedBackjumping(lS);
+			
+			
+			lS.solve(lCSPProblemPath, lCSPSolutionPath, lVO, lVS, lLB);
 			
 			ArrayList<Variable> lVarsRead = new ArrayList<Variable>();
-			for (int i=0;i<NUMBER_OF_QUEENS;i++)
+			for (int i=0;i<lNrQueens;i++)
 			{
 				Variable lVar = new Variable();
 				lVar.mName = i;

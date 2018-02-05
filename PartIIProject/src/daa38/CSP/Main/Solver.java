@@ -13,8 +13,11 @@ import daa38.CSP.LookBack.GaschnigsBackjumping;
 import daa38.CSP.LookBack.GraphBasedBackjumping;
 import daa38.CSP.LookBack.LookBack;
 import daa38.CSP.ValueSelection.ArcConsistency;
+import daa38.CSP.ValueSelection.ArcConsistencyBase;
 import daa38.CSP.ValueSelection.ConsistentAssignmentValueSelection;
 import daa38.CSP.ValueSelection.ForwardChecking;
+import daa38.CSP.ValueSelection.FullLookAhead;
+import daa38.CSP.ValueSelection.PartialLookAhead;
 import daa38.CSP.ValueSelection.ValueSelection;
 import daa38.CSP.VariableOrdering.LeastConstrainedVariableOrdering;
 import daa38.CSP.VariableOrdering.MostConstrainedVariableOrdering;
@@ -38,7 +41,9 @@ public class Solver {
 	//mVarsLeft will be in no specific order in the case of dynamic variable ordering
 	public ArrayList<Variable> mVarsLeft;
 	
-	public void solve(String pFileIn, String pFileOut) throws IOException
+	//returns time it took to solve the CSP
+	//(excluding reading/writing time)
+	public long solve(String pFileIn, String pFileOut, VariableOrdering pVO, ValueSelection pVS, LookBack pLB) throws IOException
 	{	
 		mSteps = new ArrayList<StepFrame>();
 		mVariables = new ArrayList<Variable>();
@@ -48,19 +53,10 @@ public class Solver {
 
 		CSPFileHandler.readFileProblem(pFileIn, mVariables, mConstraints);
 		
-		VariableOrdering lVO = new RandomVariableOrdering(this);
-		//VariableOrdering lVO = new LeastConstrainedVariableOrdering(this);
-		//VariableOrdering lVO = new MostConstrainedVariableOrdering(this);
+		boolean lStaticOrdering = false;
 		
-		//ValueSelection lVS = new ConsistentAssignmentValueSelection(this);
-		ValueSelection lVS = new ForwardChecking(this);
-		//ValueSelection lVS = new ArcConsistency(this);
-		
-		LookBack lLB = new Backtrack(this);
-		//LookBack lLB = new GaschnigsBackjumping(this);
-		//LookBack lLB = new GraphBasedBackjumping(this);
-		
-		boolean lStaticOrdering = true;
+		AuxTimer lTimer = new AuxTimer();
+		lTimer.start();
 		
 		if (lStaticOrdering)
 		{
@@ -68,7 +64,7 @@ public class Solver {
 			
 			while (!mAuxVars.isEmpty())
 			{
-				Variable lNextVar = lVO.order(mAuxVars);
+				Variable lNextVar = pVO.order(mAuxVars);
 				mVarsLeft.add(lNextVar);
 				mAuxVars.remove(lNextVar);
 			}
@@ -117,11 +113,18 @@ public class Solver {
 					lNowFrame.mVar = lNextVar;
 					mVarsAssigned.add(lNextVar);
 				}
+				else
+				{
+					Variable lNextVar = pVO.order(mVarsLeft);
+					mVarsLeft.remove(lNextVar);
+					lNowFrame.mVar = lNextVar;
+					mVarsAssigned.add(lNextVar);
+				}
 			}
 			else
 			if (lNowFrame.mNowValIndex==-1)
 			{
-				lVS.select(lNowFrame);
+				pVS.select(lNowFrame);
 				
 				if (lNowFrame.mValsToGo.size()==0) 
 				{
@@ -129,7 +132,7 @@ public class Solver {
 					
 					int lPrevIndex = lIndex;
 					
-					lIndex = lLB.jump(mSteps,lIndex);
+					lIndex = pLB.jump(mSteps,lIndex);
 					
 					//We have deassigned variables, so we must update mVarsAssigned and mVarsLeft
 					for (int lInt = lPrevIndex; lInt>lIndex; lInt--)
@@ -157,7 +160,7 @@ public class Solver {
 
 				int lPrevIndex = lIndex;
 				
-				lIndex = lLB.jump(mSteps, lIndex);
+				lIndex = pLB.jump(mSteps, lIndex);
 
 				//We have deassigned variables, so we must update mVarsAssigned and mVarsLeft
 				for (int lInt = lPrevIndex; lInt>lIndex; lInt--)
@@ -168,6 +171,7 @@ public class Solver {
 			}
 		}
 		
+		lTimer.stop();
 		
 		if (lIndex == -1)
 		{
@@ -188,12 +192,30 @@ public class Solver {
 				//Should be impossible to reach
 				System.out.println("Impossible area reached in Solver.java");
 			}
+		
+		return lTimer.mLapTime;
 	}
 	
 	public static void main(String[] args) throws IOException {
 		
 		AuxTimer lT = new AuxTimer();
 		lT.start();
+
+		Solver lS = new Solver();
+		
+		VariableOrdering lVO = new RandomVariableOrdering(lS);
+		//VariableOrdering lVO = new LeastConstrainedVariableOrdering(lS);
+		//VariableOrdering lVO = new MostConstrainedVariableOrdering(lS);
+		
+		ValueSelection lVS = new ConsistentAssignmentValueSelection(lS);
+		//ValueSelection lVS = new ForwardChecking(lS);
+		//ValueSelection lVS = new ArcConsistency(lS);
+		//ValueSelection lVS = new PartialLookAhead(lS);
+		//ValueSelection lVS = new FullLookAhead(lS);
+		
+		LookBack lLB = new Backtrack(lS);
+		//LookBack lLB = new GaschnigsBackjumping(lS);
+		//LookBack lLB = new GraphBasedBackjumping(lS);
 		
 		String lFileIn = "nQueens/4_nQueensCSP_problem.txt";
 		String lFileOut = "nQueens/4_nQueensCSP_solution.txt";
@@ -201,8 +223,7 @@ public class Solver {
 		//String lFileIn = "1_problem.txt";
 		//String lFileOut = "1_solution.txt";
 		
-		Solver lS = new Solver();
-		lS.solve(lFileIn, lFileOut);
+		lS.solve(lFileIn, lFileOut, lVO, lVS, lLB);
 
 		lT.stop();
 		lT.show();

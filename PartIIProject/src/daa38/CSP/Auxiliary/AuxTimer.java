@@ -4,18 +4,26 @@ public class AuxTimer {
 	
 	private Long mStartTime = null;
 	private Long mStopTime = null;
-	public Long mLapTime = null;
+	private Long mLapTime = null;
 	
 	public void start()
 	{
-		mStartTime = System.currentTimeMillis();
+		mStartTime = System.nanoTime();
 	}
 	
 	public void stop()
 	{
-		mStopTime = System.currentTimeMillis();
+		mStopTime = System.nanoTime();
 		
 		mLapTime = mStopTime-mStartTime;
+	}
+	
+	public long getTime()
+	{
+		if (mStopTime==null)
+			return (System.nanoTime()-mStartTime);
+		else
+			return mLapTime;
 	}
 	
 	public void show()
@@ -37,6 +45,6 @@ public class AuxTimer {
 			System.out.println("Timer stopped before started..., but you still get the time");
 		}
 		
-		System.out.println("It took "+mLapTime+" milliseconds");
+		System.out.println("It took "+mLapTime+" nanoseconds");
 	}
 }

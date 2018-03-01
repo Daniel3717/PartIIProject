@@ -1,9 +1,0 @@
-package daa38.Statistics;
-
-public class Analyser {
-
-	public static double getAverageDomainSize(Collection<Variable> pVars)
-	{
-		double lAv = 0;
-	}
-}

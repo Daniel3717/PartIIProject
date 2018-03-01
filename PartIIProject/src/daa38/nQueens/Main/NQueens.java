@@ -8,6 +8,7 @@ import java.util.HashMap;
 import daa38.CSP.Auxiliary.AuxTimer;
 import daa38.CSP.Auxiliary.Constraint;
 import daa38.CSP.Auxiliary.PairInts;
+import daa38.CSP.Auxiliary.UnreasonablyLongTimeException;
 import daa38.CSP.Auxiliary.Variable;
 import daa38.CSP.LookBack.GraphBasedBackjumping;
 import daa38.CSP.LookBack.LookBack;
@@ -148,7 +149,7 @@ public class NQueens {
 		return true;
 	}
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, UnreasonablyLongTimeException {
 
 		AuxTimer lT = new AuxTimer();
 		lT.start();

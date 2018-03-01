@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename field &apos;FLAT_THRESHOLD&apos; in &apos;daa38.Statistics.Gatherer&apos; to &apos;HICCUPS_THRESHOLD_FLAT&apos;&#x0D;&#x0A;- Original project: &apos;PartIIProject&apos;&#x0D;&#x0A;- Original element: &apos;daa38.Statistics.Gatherer.FLAT_THRESHOLD&apos;&#x0D;&#x0A;- Renamed element: &apos;daa38.Statistics.Gatherer.HICCUPS_THRESHOLD_FLAT&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" delegate="false" deprecate="false" description="Rename field &apos;FLAT_THRESHOLD&apos;" flags="589826" getter="false" id="org.eclipse.jdt.ui.rename.field" input="/src&lt;daa38.Statistics{Gatherer.java[Gatherer^FLAT_THRESHOLD" name="HICCUPS_THRESHOLD_FLAT" references="true" setter="false" stamp="1518754283981" textual="false" version="1.0"/>
+</session>

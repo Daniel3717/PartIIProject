@@ -1,0 +1,20 @@
+package daa38.Statistics;
+
+import daa38.CSP.VariableOrdering.LeastConstrainedVariableOrdering;
+import daa38.CSP.VariableOrdering.MostConstrainedVariableOrdering;
+import daa38.CSP.VariableOrdering.RandomVariableOrdering;
+import daa38.CSP.VariableOrdering.VariableOrdering;
+
+public class InputProcessing {
+	public static intToVO(int pVO)
+	{
+		
+		VariableOrdering lVO = new RandomVariableOrdering(lSolver);
+		
+		if (pOrder == 1)
+			lVO = new MostConstrainedVariableOrdering(lSolver);
+
+		if (pOrder == 2)
+			lVO = new LeastConstrainedVariableOrdering(lSolver);
+	}
+}

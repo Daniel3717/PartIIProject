@@ -1,0 +1,50 @@
+package daa38.Statistics.Auxiliary;
+
+public class SyncMemoryConsumptionTracker {
+	private long mTotalBytesUsed;
+	private long mMaxBytesUsed;
+	private boolean mTracking;
+	
+	public SyncMemoryConsumptionTracker()
+	{
+		mTotalBytesUsed = 0;
+		mTracking = true;
+	}
+	
+	public synchronized void addBytes(long pBytes)
+	{
+		//System.out.println("Add bytes called with "+pBytes);
+		if (mTracking)
+			mTotalBytesUsed += pBytes;
+		else
+			System.out.println("But we finished tracking");
+	}
+	
+	public synchronized void maxBytesUsed(long pBytes)
+	{
+		if (pBytes > mMaxBytesUsed)
+			mMaxBytesUsed = pBytes;
+	}
+	
+	public synchronized void endTracking()
+	{
+		//System.out.println("End tracking called");
+		long lBytesAtEnd = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+		//System.out.println("Adding "+lBytesAtEnd);
+		mTotalBytesUsed += lBytesAtEnd;
+		if (lBytesAtEnd > mMaxBytesUsed)
+			mMaxBytesUsed = lBytesAtEnd;
+		mTracking = false;
+	}
+	
+	public synchronized long getConsumedBytes()
+	{
+		return mTotalBytesUsed;
+	}
+	
+	public synchronized long getMaxUsedBytes()
+	{
+		return mMaxBytesUsed;
+	}
+	
+}

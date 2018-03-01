@@ -1,0 +1,23 @@
+package daa38.Statistics.Auxiliary;
+
+public class SyncMemoryConsumptionTracker {
+	private long mBytesConsumed;
+	private boolean mTracking;
+	
+	public SyncMemoryConsumptionTracker()
+	{
+		mBytesConsumed = 0;
+	}
+	
+	public synchronized addBytes(long pBytes)
+	{
+		mBytesConsumed += pBytes;
+	}
+	
+	public synchronized endTracking()
+	{
+		mBytesConsumed += ( Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory() );
+	}
+	
+	
+}

@@ -1,0 +1,5 @@
+package daa38.Statistics.Auxiliary;
+
+public class SyncMemoryConsumptionTracker {
+
+}

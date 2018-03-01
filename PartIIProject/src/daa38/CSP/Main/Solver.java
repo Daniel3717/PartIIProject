@@ -1,11 +1,15 @@
 package daa38.CSP.Main;
 
 import java.io.IOException;
+import java.lang.management.GarbageCollectorMXBean;
+import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import daa38.CSP.Auxiliary.Constraint;
 import daa38.CSP.Auxiliary.StepFrame;
+import daa38.CSP.Auxiliary.UnreasonablyLongTimeException;
 import daa38.CSP.Auxiliary.AuxTimer;
 import daa38.CSP.Auxiliary.Variable;
 import daa38.CSP.LookBack.Backtrack;
@@ -26,6 +30,10 @@ import daa38.CSP.VariableOrdering.VariableOrdering;
 
 public class Solver {
 
+	//I have made it public so the gatherer can modify it if he considers it is the case
+	//For the purpose of the Solver, it can be assumed constant
+	public static long UNREASONABLE_LONG_TIME = 10000000000L;//in nanoseconds, amounts to 10 seconds
+	
 	public ArrayList<StepFrame> mSteps;
 	
 	public ArrayList<Variable> mVariables;
@@ -43,8 +51,8 @@ public class Solver {
 	
 	//returns time it took to solve the CSP
 	//(excluding reading/writing time)
-	public long solve(String pFileIn, String pFileOut, VariableOrdering pVO, ValueSelection pVS, LookBack pLB) throws IOException
-	{	
+	public long solve(String pFileIn, String pFileOut, VariableOrdering pVO, ValueSelection pVS, LookBack pLB) throws IOException, UnreasonablyLongTimeException
+	{
 		mSteps = new ArrayList<StepFrame>();
 		mVariables = new ArrayList<Variable>();
 		mConstraints = new ArrayList<Constraint>();
@@ -55,7 +63,12 @@ public class Solver {
 		
 		boolean lStaticOrdering = false;
 		
-		AuxTimer lTimer = new AuxTimer();
+		AuxTimer lTimer = new AuxTimer();		
+		long lGCPrevTime = 0; //in milliseconds
+		List<GarbageCollectorMXBean> lGCPrevList = ManagementFactory.getGarbageCollectorMXBeans();
+        for (GarbageCollectorMXBean lGC : lGCPrevList) {
+        	lGCPrevTime += lGC.getCollectionTime();
+        }
 		lTimer.start();
 		
 		if (lStaticOrdering)
@@ -99,6 +112,11 @@ public class Solver {
 		while ( (lIndex<mSteps.size()) && (lIndex > -1) )
 		{
 			StepFrame lNowFrame = mSteps.get(lIndex);
+			if (lTimer.getTime()>UNREASONABLE_LONG_TIME)
+			{
+				lTimer.stop();
+				throw new UnreasonablyLongTimeException(lTimer.getTime());
+			}
 			
 			
 			//DEBUG:
@@ -172,6 +190,11 @@ public class Solver {
 		}
 		
 		lTimer.stop();
+		long lGCNowTime = 0; //in milliseconds
+		List<GarbageCollectorMXBean> lGCNowList = ManagementFactory.getGarbageCollectorMXBeans();
+        for (GarbageCollectorMXBean lGC : lGCNowList) {
+        	lGCNowTime += lGC.getCollectionTime();
+        }
 		
 		if (lIndex == -1)
 		{
@@ -193,37 +216,42 @@ public class Solver {
 				System.out.println("Impossible area reached in Solver.java");
 			}
 		
-		return lTimer.mLapTime;
+        
+        //System.out.println("NowTime is "+ lGCNowTime+" and PrevTime is "+lGCPrevTime+" and Timer time is "+lTimer.getTime()/1000000);
+        long lActualTimeSpent = lTimer.getTime() - (lGCNowTime - lGCPrevTime)*1000000;
+        
+		return lActualTimeSpent;//in nanoseconds
 	}
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, UnreasonablyLongTimeException {
 		
 		AuxTimer lT = new AuxTimer();
 		lT.start();
 
 		Solver lS = new Solver();
 		
-		VariableOrdering lVO = new RandomVariableOrdering(lS);
+		//VariableOrdering lVO = new RandomVariableOrdering(lS);
+		VariableOrdering lVO = new MostConstrainedVariableOrdering(lS);
 		//VariableOrdering lVO = new LeastConstrainedVariableOrdering(lS);
-		//VariableOrdering lVO = new MostConstrainedVariableOrdering(lS);
 		
-		ValueSelection lVS = new ConsistentAssignmentValueSelection(lS);
-		//ValueSelection lVS = new ForwardChecking(lS);
+		//ValueSelection lVS = new ConsistentAssignmentValueSelection(lS);
+		ValueSelection lVS = new ForwardChecking(lS);
 		//ValueSelection lVS = new ArcConsistency(lS);
 		//ValueSelection lVS = new PartialLookAhead(lS);
 		//ValueSelection lVS = new FullLookAhead(lS);
 		
-		LookBack lLB = new Backtrack(lS);
-		//LookBack lLB = new GaschnigsBackjumping(lS);
+		//LookBack lLB = new Backtrack(lS);
+		LookBack lLB = new GaschnigsBackjumping(lS);
 		//LookBack lLB = new GraphBasedBackjumping(lS);
 		
-		String lFileIn = "nQueens/4_nQueensCSP_problem.txt";
-		String lFileOut = "nQueens/4_nQueensCSP_solution.txt";
-		
-		//String lFileIn = "1_problem.txt";
-		//String lFileOut = "1_solution.txt";
-		
-		lS.solve(lFileIn, lFileOut, lVO, lVS, lLB);
+		for (int lInstance = 4; lInstance<=100; lInstance++)
+		{
+			String lFileIn = "nQueens/CSP"+lInstance+".in";
+			String lFileOut = "nQueens/CSP"+lInstance+".out";
+			
+			long lTimeTook = lS.solve(lFileIn, lFileOut, lVO, lVS, lLB);
+			System.out.println("Instance "+lInstance+" took "+ lTimeTook+" nanoseconds");
+		}
 
 		lT.stop();
 		lT.show();

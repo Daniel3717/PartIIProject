@@ -1,9 +1,0 @@
-package daa38.Statistics;
-
-public class Generator {
-
-	public void generateNQueensCSP(String pFile)
-	{
-		
-	}
-}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/PartIIProject/src/daa38/Statistics/Auxiliary/SingleMemoryGatherer.java"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="daa38.Statistics.Auxiliary.SingleMemoryGatherer"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="nQueens/CSP40.in nQueens/CSP40.out 1 1 1"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="PartIIProject"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-XX:+UseSerialGC"/>
+</launchConfiguration>

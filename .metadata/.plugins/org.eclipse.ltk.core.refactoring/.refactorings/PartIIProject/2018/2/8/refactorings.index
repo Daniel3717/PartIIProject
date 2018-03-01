@@ -1,0 +1,10 @@
+1519353906209	Rename type 'Gatherer'
+1519355337160	Rename local variable 'lSolver'
+1519355355713	Rename local variable 'lSolver'
+1519355390740	Rename local variable 'pSelect'
+1519362281362	Move compilation unit
+1519362289857	Move compilation unit
+1519367509781	Rename field 'mBytesConsumed'
+1519367518194	Rename field 'mBytesUsedMax'
+1519367529366	Rename field 'mConsumedBytes'
+1519367548109	Rename method 'getConsumedBytes'

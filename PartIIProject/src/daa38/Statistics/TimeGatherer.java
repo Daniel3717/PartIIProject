@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import daa38.CSP.Auxiliary.UnreasonablyLongTimeException;
 import daa38.CSP.LookBack.LookBack;
 import daa38.CSP.Main.Solver;
+import daa38.CSP.Main.Validator;
 import daa38.CSP.ValueSelection.ValueSelection;
 import daa38.CSP.VariableOrdering.VariableOrdering;
 import daa38.Statistics.Auxiliary.InputProcessing;
@@ -20,7 +21,9 @@ public class TimeGatherer {
 	//private static final int HICCUPS_SAMPLES = 2;. It is fixed at 2 at the moment.
 	private static final int RANDOM_SAMPLES = 30;
 	private static final int MAX_EXCEEDED_TIME_SAMPLES = 5;
-	private static final boolean GATHERING_QUEENS = true;//will gather from nQueens when true, otherwise from MapColouring
+	private static final boolean GATHERING_QUEENS = false;//will gather from nQueens when true, otherwise from MapColouring
+	
+	private static final int TIME_BUDGET = 1000000000;//in nanoseconds. it means 1 second
 	
 	//returns the time it for the successful solve to complete
 	private static long trySolve(Solver pS, VariableOrdering pVO, ValueSelection pVS, LookBack pLB, String pFileIn, String pFileOut) throws IOException, UnreasonablyLongTimeException
@@ -117,6 +120,9 @@ public class TimeGatherer {
 					  lA.getNrVariables() + "," + lA.getAverageDomainSize() + "," + lA.getAverageNrConstraints()+ "," + 
 					  lTime+"\r\n");
 			
+			Validator lV = new Validator(lFileIn,lFileOut);
+			System.out.println("Validator returns: "+lV.check());
+			
 			
 		}
 		
@@ -147,13 +153,13 @@ public class TimeGatherer {
 			if (GATHERING_QUEENS)
 			{
 				String lBasePath = "NQueens/CSP";
-				lInstancesGenerated = 100;
+				lInstancesGenerated = 50;
 				Generator.massGenerateNQueensCSPs(lBasePath, lInstancesGenerated, lCSPFilesIn, lCSPFilesOut);
 			}
 			else
 			{
 				String lBasePath = "MapColouring/CSP";
-				lInstancesGenerated = 300;
+				lInstancesGenerated = 200;
 				Generator.massGenerateMapColouringCSPs(lBasePath, lInstancesGenerated, lCSPFilesIn, lCSPFilesOut);
 			}
 			
@@ -169,8 +175,7 @@ public class TimeGatherer {
 					}
 			
 			
-			long lTimeBudget = 1000000000L;//in nanoseconds. 1 sec
-			int lMaxJump = 1; //if well within time budget, how many instances should we go forward by
+			int lMaxJump = 1; //if within time budget, how many instances should we go forward by
 			
 			boolean lNeedAnotherTurn = true;
 			while (lNeedAnotherTurn)
@@ -180,6 +185,7 @@ public class TimeGatherer {
 				for (int lVO = 0; lVO <= 2; lVO++)
 					for (int lVS = 0; lVS <= 4; lVS++)
 						for (int lLB = 0; lLB <= 2; lLB++)
+							if ((lVO==1)&&(lVS==1)&&(lLB==1))//testing MATLAB, I need a lot of results for a specific algo
 							if ((lStartSeq[lVO][lVS][lLB]!=lEndSeq[lVO][lVS][lLB])&&(lEndSeq[lVO][lVS][lLB]<lInstancesGenerated))
 							{
 								int lNextNr = 0;
@@ -191,7 +197,7 @@ public class TimeGatherer {
 									if (lMaxTimeTook==0)
 										lNextNr = lMaxJump;
 									else
-										lNextNr = Math.min(lMaxJump,(int) (lTimeBudget/lMaxTimeTook));
+										lNextNr = Math.min(lMaxJump,(int) (TIME_BUDGET/lMaxTimeTook));
 								}
 								catch (UnreasonablyLongTimeException lULTE)
 								{

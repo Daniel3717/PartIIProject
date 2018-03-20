@@ -15,7 +15,7 @@ public class LeastConstrainedVariableOrdering extends VariableOrdering {
 		super(pSolver);
 	}
 	
-	//Basically, we do MostConstrainedVariableOrdering, then reverse the result
+	//Basically, we do MostConstrainedVariableOrdering, but return min instead of max
 	@Override
 	public Variable order(ArrayList<Variable> pVars) {
 

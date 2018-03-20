@@ -7,7 +7,7 @@ public class StepFrame {
 	public Variable mVar; //Variable to assign at this frame
 	public ArrayList<Integer> mValsToGo; //Values that can be used for current variable
 	public ArrayList<VariablesRestrictions> mRes; //Restrictions imposed on other variables due to value at same index
-	public int mNowValIndex; //Current value's index
+	public Integer mNowValIndex; //Current value's index
 
 	public StepFrame()
 	{

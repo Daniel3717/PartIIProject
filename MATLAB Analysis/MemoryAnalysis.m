@@ -10,7 +10,7 @@ for lVO = 0:2
                 szData = size(Data(:,4));
                 szData = szData(1);
                 X = [[1:1:szData];transpose(Data(:,4))]';
-                Ymatrix = accumarray(X,Data(:,7),[],@mean);
+                Ymatrix = accumarray(X,Data(:,9),[],@mean);
                 Y = [];
                 for i = 1 : size(Ymatrix,2)
                     coli = Ymatrix(:,i);
@@ -26,6 +26,7 @@ for lVO = 0:2
                     Y = [Y,meanColi];
                 end
                 plot([1:1:size(Y,2)],log10(Y));
+                %plot([1:1:size(Y,2)],(Y));
                 names{end+1} = ""+lVO+lVS+lLB;
             %end
         end

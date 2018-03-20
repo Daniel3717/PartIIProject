@@ -2,7 +2,7 @@ package daa38.CSP.Auxiliary;
 
 public class UnreasonablyLongTimeException extends Exception {
 	
-	long mTimeStopped;
+	private Long mTimeStopped;
 	
 	public UnreasonablyLongTimeException(long pTimeStopped)
 	{

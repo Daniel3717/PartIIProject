@@ -2,12 +2,15 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="instance" key="selection"/>
+		<item value="GOT CALLED" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="GOT CALLED"/>
+			<item value="totalSize"/>
+			<item value="parseINstance"/>
 			<item value="Instance"/>
 			<item value="millis"/>
 			<item value="debug"/>

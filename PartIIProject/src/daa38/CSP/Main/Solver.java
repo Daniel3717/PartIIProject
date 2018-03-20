@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.openjdk.jol.info.GraphLayout;
+
 import daa38.CSP.Auxiliary.Constraint;
 import daa38.CSP.Auxiliary.StepFrame;
 import daa38.CSP.Auxiliary.UnreasonablyLongTimeException;
@@ -29,10 +31,30 @@ import daa38.CSP.VariableOrdering.RandomVariableOrdering;
 import daa38.CSP.VariableOrdering.VariableOrdering;
 
 public class Solver {
+	
+	//This is for memory analysis
+	//They need to be in a group
+	//When called individually, JOL will count duplicates on Objects such as Variables or Constraints
+	public static class MemoryAnalysisGroup
+	{
+		public Solver mSolver;
+		public VariableOrdering mVO;
+		public ValueSelection mVS;
+		public LookBack mLB;
+		
+		public MemoryAnalysisGroup(Solver pSolver, VariableOrdering pVO, ValueSelection pVS, LookBack pLB)
+		{
+			mSolver = pSolver;
+			mVO = pVO;
+			mVS = pVS;
+			mLB = pLB;
+		}
+	}
+	
 
 	//I have made it public so the gatherer can modify it if he considers it is the case
 	//For the purpose of the Solver, it can be assumed constant
-	public static long UNREASONABLE_LONG_TIME = 10000000000L;//in nanoseconds, amounts to 10 seconds
+	public static long UNREASONABLE_LONG_TIME = 1000000000L;//in nanoseconds, amounts to 1 second
 	
 	public ArrayList<StepFrame> mSteps;
 	
@@ -49,9 +71,19 @@ public class Solver {
 	//mVarsLeft will be in no specific order in the case of dynamic variable ordering
 	public ArrayList<Variable> mVarsLeft;
 	
-	//returns time it took to solve the CSP
-	//(excluding reading/writing time)
+	//previous way of calling this. Since I want the default to be measuring time but Java does not support default
+	//parameters, I have to do it this way
 	public long solve(String pFileIn, String pFileOut, VariableOrdering pVO, ValueSelection pVS, LookBack pLB) throws IOException, UnreasonablyLongTimeException
+	{
+		return solve(pFileIn, pFileOut, pVO, pVS, pLB, true);
+	}
+	
+	//returns time (in nanoseconds) or memory (in bytes) it took to solve the CSP
+	//(excluding reading/writing time)
+	//(also, memory is measured only via Solver's reference graph. 
+	//This can be done because my current implementations of heuristics are state-free (except for the Solver member))
+	//Note that tracking memory using JOL invalidates GC tracking, so if you want to gather using GC-tracking, run this in return time mode
+	public long solve(String pFileIn, String pFileOut, VariableOrdering pVO, ValueSelection pVS, LookBack pLB, boolean pIsReturningTime) throws IOException, UnreasonablyLongTimeException
 	{
 		mSteps = new ArrayList<StepFrame>();
 		mVariables = new ArrayList<Variable>();
@@ -62,13 +94,17 @@ public class Solver {
 		CSPFileHandler.readFileProblem(pFileIn, mVariables, mConstraints);
 		
 		boolean lStaticOrdering = false;
-		
-		AuxTimer lTimer = new AuxTimer();		
+			
 		long lGCPrevTime = 0; //in milliseconds
 		List<GarbageCollectorMXBean> lGCPrevList = ManagementFactory.getGarbageCollectorMXBeans();
         for (GarbageCollectorMXBean lGC : lGCPrevList) {
         	lGCPrevTime += lGC.getCollectionTime();
         }
+        
+        long lMaxMemoryConsumed = 0;
+        MemoryAnalysisGroup lMAG = new MemoryAnalysisGroup(this,pVO,pVS,pLB);
+        
+		AuxTimer lTimer = new AuxTimer();	
 		lTimer.start();
 		
 		if (lStaticOrdering)
@@ -111,14 +147,13 @@ public class Solver {
 		//if lIndex reaches -1, then there is no solution
 		while ( (lIndex<mSteps.size()) && (lIndex > -1) )
 		{
-			StepFrame lNowFrame = mSteps.get(lIndex);
 			if (lTimer.getTime()>UNREASONABLE_LONG_TIME)
 			{
 				lTimer.stop();
 				throw new UnreasonablyLongTimeException(lTimer.getTime());
 			}
 			
-			
+			StepFrame lNowFrame = mSteps.get(lIndex);
 			//DEBUG:
 			//lNowFrame.outputFrame();
 			
@@ -148,6 +183,18 @@ public class Solver {
 				{
 					//so this is a (leaf) dead end
 					
+					/*
+					//We compute this before LookBack, as until this point the memory used is increasing
+					if (!pIsReturningTime)
+					{
+						//Wouldn't want to do this when measuring time since it is quite time consuming
+						long lNowOccupying = GraphLayout.parseInstance(lMAG).totalSize();
+						if (lNowOccupying > lMaxMemoryConsumed)
+							lMaxMemoryConsumed = lNowOccupying;
+						//System.out.println("Occupying "+lNowOccupying+" bytes");
+					}
+					*/
+					
 					int lPrevIndex = lIndex;
 					
 					lIndex = pLB.jump(mSteps,lIndex);
@@ -175,7 +222,20 @@ public class Solver {
 			else //Finished checking all values for current variable
 			{
 				//so this is a (internal) dead end
-
+				
+				/*
+				//We compute this before LookBack, as until this point the memory used is increasing
+				if (!pIsReturningTime)
+				{
+					//Wouldn't want to do this when measuring time since it is quite time consuming
+					long lNowOccupying = GraphLayout.parseInstance(lMAG).totalSize();
+					if (lNowOccupying > lMaxMemoryConsumed)
+						lMaxMemoryConsumed = lNowOccupying;
+					//System.out.println("Occupying "+lNowOccupying+" bytes");
+				}
+				*/
+				
+				
 				int lPrevIndex = lIndex;
 				
 				lIndex = pLB.jump(mSteps, lIndex);
@@ -187,6 +247,16 @@ public class Solver {
 					mVarsLeft.add(lVarNow);
 				}
 			}
+		}
+		
+		//We also compute this at the end
+		if (!pIsReturningTime)
+		{
+			//Wouldn't want to do this when measuring time since it is quite time consuming
+			long lNowOccupying = GraphLayout.parseInstance(lMAG).totalSize();
+			if (lNowOccupying > lMaxMemoryConsumed)
+				lMaxMemoryConsumed = lNowOccupying;
+			//System.out.println("Occupying "+lNowOccupying+" bytes");
 		}
 		
 		lTimer.stop();
@@ -220,7 +290,10 @@ public class Solver {
         //System.out.println("NowTime is "+ lGCNowTime+" and PrevTime is "+lGCPrevTime+" and Timer time is "+lTimer.getTime()/1000000);
         long lActualTimeSpent = lTimer.getTime() - (lGCNowTime - lGCPrevTime)*1000000;
         
-		return lActualTimeSpent;//in nanoseconds
+        if (pIsReturningTime)
+        	return lActualTimeSpent;//in nanoseconds
+        else
+        	return lMaxMemoryConsumed;//in bytes
 	}
 	
 	public static void main(String[] args) throws IOException, UnreasonablyLongTimeException {

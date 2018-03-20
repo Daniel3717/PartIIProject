@@ -1,8 +1,0 @@
-package daa38.Statistics;
-
-public class InputProcessing {
-	public static intToVO(int pVO)
-	{
-		
-	}
-}

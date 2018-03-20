@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workingSetManager>
+<workingSet editPageId="org.eclipse.ui.resourceWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1520557285846_1" label="jol-parent" name="jol-parent"/>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1509578805218_0" label="Window Working Set" name="Aggregate for window 1509578805218"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1521195924185_2" label="Window Working Set" name="Aggregate for window 1521195924185"/>
 </workingSetManager>

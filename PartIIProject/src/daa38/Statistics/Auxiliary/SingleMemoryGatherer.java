@@ -64,14 +64,18 @@ public class SingleMemoryGatherer {
 		ValueSelection lVS = InputProcessing.intToVS(lSelect, lS);
 		LookBack lLB = InputProcessing.intToLB(lBack, lS);
 		
+		//This one is using GC-tracking so we're running in time-track mode
 		lS.solve(lInPath, lOutPath, lVO, lVS, lLB);
 		
 		lSMCT.endTracking();
 		//System.out.println("A total of "+lSMCT.getTotalBytesUsed()+" bytes was consumed. A max of "+lSMCT.getMaxBytesUsed()+" bytes was reached.");
 
+		//Add-on after JOL. Here we will also use JOL to track and add the new statistic in the file output.
+		long lJOLMemory = lS.solve(lInPath, lOutPath, lVO, lVS, lLB, false); //in bytes
+		
 		//Note that this will trigger calls to our memory tracker from the garbage collectors
 		//I have tested without this and with a serial garbage collector and the behaviour was varying as expected
-		//I also wasn't receiving any debug information about calling the addBytes after endTracking
+		//I also wasn't receiving any bad debug information about calling the addBytes after endTracking
 		//So I'm more than 99% sure that lSMCT.getTotalBytesUsed and lSMCT.getMaxBytesUsed will return the correct values
 		//Uninfluenced by the additional memory consumption of the statistical analysis and output which follow below
 		String lData = "Statistics/Memory/Data"+lWhichOne+lOrder+lSelect+lBack+".txt";
@@ -80,7 +84,7 @@ public class SingleMemoryGatherer {
 		Analyser lA = new Analyser(lInPath);
 		lFW.write(lOrder + "," + lSelect + "," + lBack + "," + 
 				  lA.getNrVariables() + "," + lA.getAverageDomainSize() + "," + lA.getAverageNrConstraints()+ "," + 
-				  lSMCT.getTotalBytesUsed() + "," + lSMCT.getMaxBytesUsed() + "\r\n");
+				  lSMCT.getTotalBytesUsed() + "," + lSMCT.getMaxBytesUsed() + "," + lJOLMemory + "\r\n");
 		
 		lFW.close();
 		
@@ -106,7 +110,7 @@ public class SingleMemoryGatherer {
 	        public void handleNotification(Notification notification, Object handback) {
 	          //we only handle GARBAGE_COLLECTION_NOTIFICATION notifications here
 	          if (notification.getType().equals(GarbageCollectionNotificationInfo.GARBAGE_COLLECTION_NOTIFICATION)) {
-	            
+	        	  
 	        	//get the information associated with this notification
 	            GarbageCollectionNotificationInfo info = GarbageCollectionNotificationInfo.from((CompositeData) notification.getUserData());
 	            

@@ -135,3 +135,166 @@ java.net.UnknownHostException: services.gradle.org
 2018-02-19 18:47:55,077 [main] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache file is out-of-date. Remote download required.
 2018-02-20 09:07:31,819 [main] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache file is not out-of-date. No remote download required.
 2018-02-23 03:11:58,891 [main] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache file is out-of-date. Remote download required.
+2018-03-04 10:10:19,323 [Worker-2] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2018-03-05 18:26:50,883 [Worker-4] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2018-03-08 16:59:37,446 [Worker-4] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2018-03-08 23:12:38,682 [Worker-4] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2018-03-08 23:56:42,485 [Worker-19] INFO  o.e.m.c.i.i.nexus.NexusIndexManager - Updating index for repository: central|https://repo.maven.apache.org/maven2
+2018-03-09 00:06:19,540 [Worker-19] INFO  o.e.m.c.i.i.nexus.NexusIndexManager - Updated index for repository: central|https://repo.maven.apache.org/maven2 in 577056 ms
+2018-03-09 00:17:14,627 [Worker-20] ERROR o.e.m2e.scm.MavenProjectPomScanner - Error reading jol-core
+org.apache.maven.artifact.InvalidArtifactRTException: For artifact {org.openjdk.jol:jol-core:null:pom}: The version cannot be empty.
+	at org.apache.maven.artifact.DefaultArtifact.validateIdentity(DefaultArtifact.java:148) ~[maven-artifact-3.3.9.jar:3.3.9]
+	at org.apache.maven.artifact.DefaultArtifact.<init>(DefaultArtifact.java:123) ~[maven-artifact-3.3.9.jar:3.3.9]
+	at org.apache.maven.artifact.factory.DefaultArtifactFactory.createArtifact(DefaultArtifactFactory.java:157) ~[maven-core-3.3.9.jar:3.3.9]
+	at org.apache.maven.artifact.factory.DefaultArtifactFactory.createArtifact(DefaultArtifactFactory.java:117) ~[maven-core-3.3.9.jar:3.3.9]
+	at org.apache.maven.artifact.factory.DefaultArtifactFactory.createArtifact(DefaultArtifactFactory.java:111) ~[maven-core-3.3.9.jar:3.3.9]
+	at org.apache.maven.artifact.factory.DefaultArtifactFactory.createArtifactWithClassifier(DefaultArtifactFactory.java:45) ~[maven-core-3.3.9.jar:3.3.9]
+	at org.apache.maven.repository.legacy.LegacyRepositorySystem.createArtifactWithClassifier(LegacyRepositorySystem.java:130) ~[maven-compat-3.3.9.jar:3.3.9]
+	at org.eclipse.m2e.core.internal.embedder.MavenImpl.resolve(MavenImpl.java:717) ~[org.eclipse.m2e.core_1.8.2.20171007-0217.jar:na]
+	at org.eclipse.m2e.scm.MavenProjectPomScanner.resolveModel(MavenProjectPomScanner.java:208) ~[org.eclipse.m2e.scm_1.8.2.20171007-0217.jar:na]
+	at org.eclipse.m2e.scm.MavenProjectPomScanner.run(MavenProjectPomScanner.java:84) ~[org.eclipse.m2e.scm_1.8.2.20171007-0217.jar:na]
+	at org.eclipse.m2e.scm.internal.wizards.MavenMaterializePomWizard$2.getProjects(MavenMaterializePomWizard.java:140) [org.eclipse.m2e.scm_1.8.2.20171007-0217.jar:na]
+	at org.eclipse.m2e.scm.internal.wizards.MavenMaterializePomWizard$2.getProjects(MavenMaterializePomWizard.java:1) [org.eclipse.m2e.scm_1.8.2.20171007-0217.jar:na]
+	at org.eclipse.m2e.scm.internal.wizards.MavenProjectCheckoutJob.runInWorkspace(MavenProjectCheckoutJob.java:107) [org.eclipse.m2e.scm_1.8.2.20171007-0217.jar:na]
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:39) [org.eclipse.core.resources_3.12.0.v20170417-1558.jar:na]
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:56) [org.eclipse.core.jobs_3.9.2.v20171030-1027.jar:na]
+2018-03-09 00:17:14,661 [Worker-20] INFO  o.e.m.s.i.w.MavenProjectCheckoutJob - No Maven projects to import
+2018-03-09 00:18:38,878 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2018-03-09 00:18:40,206 [Worker-3] INFO  o.e.m.c.i.i.nexus.NexusIndexManager - Updating index for repository: central|https://repo.maven.apache.org/maven2
+2018-03-09 00:19:04,784 [Worker-3] INFO  o.e.m.c.i.i.nexus.NexusIndexManager - Updated index for repository: central|https://repo.maven.apache.org/maven2 in 24578 ms
+2018-03-09 00:34:31,489 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2018-03-09 00:59:54,344 [Worker-4] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2018-03-09 01:01:26,402 [Worker-2] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using NULL lifecycle mapping for MavenProject: org.openjdk.jol:jol-parent:0.10-SNAPSHOT @ C:\DesktopBackup\GitHub\PartIIProject\PartIIProject\Imports\jol\pom.xml.
+2018-03-09 01:01:26,802 [Worker-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-deploy-plugin/2.7/maven-deploy-plugin-2.7.jar
+2018-03-09 01:01:26,889 [Worker-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-deploy-plugin/2.7/maven-deploy-plugin-2.7.jar
+2018-03-09 01:01:27,048 [Worker-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-site-plugin/3.3/maven-site-plugin-3.3.jar
+2018-03-09 01:01:27,101 [Worker-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-site-plugin/3.3/maven-site-plugin-3.3.jar
+2018-03-09 01:01:27,656 [Worker-2] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: org.openjdk.jol:jol-core:0.10-SNAPSHOT @ C:\DesktopBackup\GitHub\PartIIProject\PartIIProject\Imports\jol\jol-core\pom.xml.
+2018-03-09 01:01:27,724 [Worker-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-shade-plugin/2.2/maven-shade-plugin-2.2.jar
+2018-03-09 01:01:27,757 [Worker-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-shade-plugin/2.2/maven-shade-plugin-2.2.jar
+2018-03-09 01:01:27,848 [Worker-2] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: org.openjdk.jol:jol-cli:0.10-SNAPSHOT @ C:\DesktopBackup\GitHub\PartIIProject\PartIIProject\Imports\jol\jol-cli\pom.xml.
+2018-03-09 01:01:27,943 [Worker-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/net/sf/jopt-simple/jopt-simple/4.6/jopt-simple-4.6.pom
+2018-03-09 01:01:27,973 [Worker-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/net/sf/jopt-simple/jopt-simple/4.6/jopt-simple-4.6.pom
+2018-03-09 01:01:27,994 [Worker-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/sonatype/oss/oss-parent/7/oss-parent-7.pom
+2018-03-09 01:01:28,014 [Worker-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/sonatype/oss/oss-parent/7/oss-parent-7.pom
+2018-03-09 01:01:28,035 [Worker-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/net/sf/jopt-simple/jopt-simple/4.6/jopt-simple-4.6.jar
+2018-03-09 01:01:28,068 [Worker-2] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/net/sf/jopt-simple/jopt-simple/4.6/jopt-simple-4.6.jar
+2018-03-09 01:01:28,297 [Worker-2] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: org.openjdk.jol:jol-samples:0.10-SNAPSHOT @ C:\DesktopBackup\GitHub\PartIIProject\PartIIProject\Imports\jol\jol-samples\pom.xml.
+2018-03-09 01:01:28,808 [Worker-2] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /jol-core/src/main/java
+2018-03-09 01:01:28,808 [Worker-2] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /jol-core/src/main/resources
+2018-03-09 01:01:28,821 [Worker-2] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /jol-core/src/test/java
+2018-03-09 01:01:28,918 [Worker-2] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /jol-cli/src/main/java
+2018-03-09 01:01:28,918 [Worker-2] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /jol-cli/src/main/resources
+2018-03-09 01:01:28,924 [Worker-2] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /jol-cli/src/test/java
+2018-03-09 01:01:28,992 [Worker-2] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /jol-samples/src/main/java
+2018-03-09 01:01:28,995 [Worker-2] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /jol-samples/src/test/java
+2018-03-09 01:01:29,054 [Worker-2] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Imported and configured 4 project(s) in 3 sec
+2018-03-09 01:01:30,912 [Worker-0] INFO  o.e.m.i.discovery.MavenDiscovery - No lifecyle mapping found at jar:file:/C:/Users/Daniel/AppData/Local/Temp/RemoteBundleDiscoveryStrategy5377222131396585129.tmp/org.eclipse.m2e.discovery.oss_catalog_1.6.jar_11685720965616477009.jar!/lifecycle%2Forg.eclipse.m2e.discovery.lifecyclemapping.m2e-egit.xml
+2018-03-09 01:01:30,913 [Worker-0] WARN  o.e.m.i.discovery.MavenDiscovery - CatalogItem org.eclipse.m2e.discovery.lifecyclemapping.m2e-egit does not contain lifecycle mapping metadata
+2018-03-09 01:01:30,935 [Worker-0] INFO  o.e.m.i.discovery.MavenDiscovery - No lifecyle mapping found at jar:file:/C:/Users/Daniel/AppData/Local/Temp/RemoteBundleDiscoveryStrategy5377222131396585129.tmp/org.eclipse.m2e.discovery.oss_catalog_1.6.jar_11685720965616477009.jar!/lifecycle%2Forg.eclipse.m2e.discovery.lifecyclemapping.m2e-subversive.xml
+2018-03-09 01:01:30,951 [Worker-0] WARN  o.e.m.i.discovery.MavenDiscovery - CatalogItem org.eclipse.m2e.discovery.lifecyclemapping.m2e-subversive does not contain lifecycle mapping metadata
+2018-03-09 01:01:32,876 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-03-09 01:01:32,893 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2018-03-09 01:01:32,926 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-03-09 01:01:32,933 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\DesktopBackup\GitHub\PartIIProject\PartIIProject\Imports\jol\jol-core\src\test\resources
+2018-03-09 01:01:33,222 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-03-09 01:01:33,223 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2018-03-09 01:01:33,258 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-03-09 01:01:33,259 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\DesktopBackup\GitHub\PartIIProject\PartIIProject\Imports\jol\jol-cli\src\test\resources
+2018-03-09 01:01:33,775 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-03-09 01:01:33,775 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\DesktopBackup\GitHub\PartIIProject\PartIIProject\Imports\jol\jol-samples\src\main\resources
+2018-03-09 01:01:33,782 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-03-09 01:01:33,782 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\DesktopBackup\GitHub\PartIIProject\PartIIProject\Imports\jol\jol-samples\src\test\resources
+2018-03-09 01:06:25,817 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2018-03-09 01:06:59,484 [Worker-6] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using NULL lifecycle mapping for MavenProject: org.openjdk.jol:jol-parent:0.10-SNAPSHOT @ C:\DesktopBackup\GitHub\PartIIProject\PartIIProject\Imports\jol\pom.xml.
+2018-03-09 01:07:00,090 [Worker-6] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: org.openjdk.jol:jol-core:0.10-SNAPSHOT @ C:\DesktopBackup\GitHub\PartIIProject\PartIIProject\Imports\jol\jol-core\pom.xml.
+2018-03-09 01:07:00,193 [Worker-6] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: org.openjdk.jol:jol-cli:0.10-SNAPSHOT @ C:\DesktopBackup\GitHub\PartIIProject\PartIIProject\Imports\jol\jol-cli\pom.xml.
+2018-03-09 01:07:00,201 [Worker-6] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for org.openjdk.jol:jol-core:jar:0.10-SNAPSHOT is missing, no dependency information available
+2018-03-09 01:07:00,291 [Worker-6] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: org.openjdk.jol:jol-samples:0.10-SNAPSHOT @ C:\DesktopBackup\GitHub\PartIIProject\PartIIProject\Imports\jol\jol-samples\pom.xml.
+2018-03-09 01:07:00,748 [Worker-6] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /jol-core/src/main/java
+2018-03-09 01:07:00,748 [Worker-6] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /jol-core/src/main/resources
+2018-03-09 01:07:00,788 [Worker-6] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /jol-core/src/test/java
+2018-03-09 01:07:00,916 [Worker-6] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /jol-cli/src/main/java
+2018-03-09 01:07:00,916 [Worker-6] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /jol-cli/src/main/resources
+2018-03-09 01:07:00,920 [Worker-6] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /jol-cli/src/test/java
+2018-03-09 01:07:01,000 [Worker-6] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /jol-samples/src/main/java
+2018-03-09 01:07:01,000 [Worker-6] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /jol-samples/src/test/java
+2018-03-09 01:07:01,042 [Worker-6] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Imported and configured 4 project(s) in 2 sec
+2018-03-09 01:07:02,039 [Worker-4] INFO  o.e.m.i.discovery.MavenDiscovery - No lifecyle mapping found at jar:file:/C:/Users/Daniel/AppData/Local/Temp/RemoteBundleDiscoveryStrategy14866234183476280336.tmp/org.eclipse.m2e.discovery.oss_catalog_1.6.jar_6039041784158188776.jar!/lifecycle%2Forg.eclipse.m2e.discovery.lifecyclemapping.m2e-egit.xml
+2018-03-09 01:07:02,040 [Worker-4] WARN  o.e.m.i.discovery.MavenDiscovery - CatalogItem org.eclipse.m2e.discovery.lifecyclemapping.m2e-egit does not contain lifecycle mapping metadata
+2018-03-09 01:07:02,048 [Worker-4] INFO  o.e.m.i.discovery.MavenDiscovery - No lifecyle mapping found at jar:file:/C:/Users/Daniel/AppData/Local/Temp/RemoteBundleDiscoveryStrategy14866234183476280336.tmp/org.eclipse.m2e.discovery.oss_catalog_1.6.jar_6039041784158188776.jar!/lifecycle%2Forg.eclipse.m2e.discovery.lifecyclemapping.m2e-subversive.xml
+2018-03-09 01:07:02,048 [Worker-4] WARN  o.e.m.i.discovery.MavenDiscovery - CatalogItem org.eclipse.m2e.discovery.lifecyclemapping.m2e-subversive does not contain lifecycle mapping metadata
+2018-03-09 01:07:02,319 [Worker-12] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for org.openjdk.jol:jol-core:jar:0.10-SNAPSHOT is missing, no dependency information available
+2018-03-09 01:07:02,381 [Worker-12] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-03-09 01:07:02,388 [Worker-12] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2018-03-09 01:07:02,413 [Worker-12] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-03-09 01:07:02,413 [Worker-12] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\DesktopBackup\GitHub\PartIIProject\PartIIProject\Imports\jol\jol-cli\src\test\resources
+2018-03-09 01:07:03,418 [Worker-12] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-03-09 01:07:03,419 [Worker-12] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2018-03-09 01:07:03,437 [Worker-12] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-03-09 01:07:03,437 [Worker-12] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\DesktopBackup\GitHub\PartIIProject\PartIIProject\Imports\jol\jol-core\src\test\resources
+2018-03-09 01:07:03,466 [Worker-12] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for org.openjdk.jol:jol-core:jar:0.10-SNAPSHOT is missing, no dependency information available
+2018-03-09 01:07:03,478 [Worker-12] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-03-09 01:07:03,478 [Worker-12] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\DesktopBackup\GitHub\PartIIProject\PartIIProject\Imports\jol\jol-samples\src\main\resources
+2018-03-09 01:07:03,479 [Worker-12] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-03-09 01:07:03,486 [Worker-12] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\DesktopBackup\GitHub\PartIIProject\PartIIProject\Imports\jol\jol-samples\src\test\resources
+2018-03-09 01:07:38,671 [Worker-1] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using NULL lifecycle mapping for MavenProject: org.openjdk.jol:jol-parent:0.10-SNAPSHOT @ C:\DesktopBackup\GitHub\PartIIProject\PartIIProject\Imports\jol\pom.xml.
+2018-03-09 01:07:39,024 [Worker-1] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: org.openjdk.jol:jol-core:0.10-SNAPSHOT @ C:\DesktopBackup\GitHub\PartIIProject\PartIIProject\Imports\jol\jol-core\pom.xml.
+2018-03-09 01:07:39,123 [Worker-1] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: org.openjdk.jol:jol-cli:0.10-SNAPSHOT @ C:\DesktopBackup\GitHub\PartIIProject\PartIIProject\Imports\jol\jol-cli\pom.xml.
+2018-03-09 01:07:39,221 [Worker-1] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: org.openjdk.jol:jol-samples:0.10-SNAPSHOT @ C:\DesktopBackup\GitHub\PartIIProject\PartIIProject\Imports\jol\jol-samples\pom.xml.
+2018-03-09 01:07:39,623 [Worker-1] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /jol-core/src/main/java
+2018-03-09 01:07:39,628 [Worker-1] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /jol-core/src/main/resources
+2018-03-09 01:07:39,629 [Worker-1] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /jol-core/src/test/java
+2018-03-09 01:07:39,666 [Worker-1] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /jol-cli/src/main/java
+2018-03-09 01:07:39,666 [Worker-1] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /jol-cli/src/main/resources
+2018-03-09 01:07:39,666 [Worker-1] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /jol-cli/src/test/java
+2018-03-09 01:07:39,697 [Worker-1] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /jol-samples/src/main/java
+2018-03-09 01:07:39,703 [Worker-1] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /jol-samples/src/test/java
+2018-03-09 01:07:39,722 [Worker-1] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Imported and configured 4 project(s) in 1 sec
+2018-03-09 01:07:40,826 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-03-09 01:07:40,827 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2018-03-09 01:07:40,854 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-03-09 01:07:40,854 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\DesktopBackup\GitHub\PartIIProject\PartIIProject\Imports\jol\jol-core\src\test\resources
+2018-03-09 01:07:41,067 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-03-09 01:07:41,067 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2018-03-09 01:07:41,086 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-03-09 01:07:41,087 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\DesktopBackup\GitHub\PartIIProject\PartIIProject\Imports\jol\jol-cli\src\test\resources
+2018-03-09 01:07:41,504 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-03-09 01:07:41,504 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\DesktopBackup\GitHub\PartIIProject\PartIIProject\Imports\jol\jol-samples\src\main\resources
+2018-03-09 01:07:41,511 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-03-09 01:07:41,512 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\DesktopBackup\GitHub\PartIIProject\PartIIProject\Imports\jol\jol-samples\src\test\resources
+2018-03-09 01:12:53,774 [Worker-7] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using NULL lifecycle mapping for MavenProject: org.openjdk.jol:jol-parent:0.10-SNAPSHOT @ C:\DesktopBackup\GitHub\PartIIProject\jol-parent\pom.xml.
+2018-03-09 01:14:51,192 [Worker-8] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using NULL lifecycle mapping for MavenProject: org.openjdk.jol:jol-parent:0.10-SNAPSHOT @ C:\DesktopBackup\GitHub\PartIIProject\PartIIProject\Imports\jol\pom.xml.
+2018-03-09 01:18:51,663 [Worker-7] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using NULL lifecycle mapping for MavenProject: org.openjdk.jol:jol-parent:0.10-SNAPSHOT @ C:\DesktopBackup\GitHub\PartIIProject\jol\pom.xml.
+2018-03-09 01:21:45,756 [main] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using NULL lifecycle mapping for MavenProject: org.openjdk.jol:jol-parent:0.10-SNAPSHOT @ C:\DesktopBackup\GitHub\PartIIProject\jol\pom.xml.
+2018-03-09 01:23:07,309 [Worker-6] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using NULL lifecycle mapping for MavenProject: org.openjdk.jol:jol-parent:0.10-SNAPSHOT @ C:\DesktopBackup\GitHub\PartIIProject\jol\pom.xml.
+2018-03-09 01:23:07,657 [Worker-6] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: org.openjdk.jol:jol-core:0.10-SNAPSHOT @ C:\DesktopBackup\GitHub\PartIIProject\jol\jol-core\pom.xml.
+2018-03-09 01:23:07,744 [Worker-6] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: org.openjdk.jol:jol-cli:0.10-SNAPSHOT @ C:\DesktopBackup\GitHub\PartIIProject\jol\jol-cli\pom.xml.
+2018-03-09 01:23:07,823 [Worker-6] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: org.openjdk.jol:jol-samples:0.10-SNAPSHOT @ C:\DesktopBackup\GitHub\PartIIProject\jol\jol-samples\pom.xml.
+2018-03-09 01:23:08,147 [Worker-6] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /jol-core/src/main/java
+2018-03-09 01:23:08,147 [Worker-6] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /jol-core/src/main/resources
+2018-03-09 01:23:08,152 [Worker-6] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /jol-core/src/test/java
+2018-03-09 01:23:08,175 [Worker-6] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /jol-cli/src/main/java
+2018-03-09 01:23:08,175 [Worker-6] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /jol-cli/src/main/resources
+2018-03-09 01:23:08,175 [Worker-6] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /jol-cli/src/test/java
+2018-03-09 01:23:08,201 [Worker-6] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /jol-samples/src/main/java
+2018-03-09 01:23:08,202 [Worker-6] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /jol-samples/src/test/java
+2018-03-09 01:23:08,215 [Worker-6] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Imported and configured 4 project(s) in 1 sec
+2018-03-09 01:23:09,243 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-03-09 01:23:09,244 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2018-03-09 01:23:09,267 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-03-09 01:23:09,267 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\DesktopBackup\GitHub\PartIIProject\jol\jol-core\src\test\resources
+2018-03-09 01:23:09,431 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-03-09 01:23:09,439 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2018-03-09 01:23:09,459 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-03-09 01:23:09,465 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\DesktopBackup\GitHub\PartIIProject\jol\jol-cli\src\test\resources
+2018-03-09 01:23:09,751 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-03-09 01:23:09,758 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\DesktopBackup\GitHub\PartIIProject\jol\jol-samples\src\main\resources
+2018-03-09 01:23:09,760 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-03-09 01:23:09,760 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\DesktopBackup\GitHub\PartIIProject\jol\jol-samples\src\test\resources
+2018-03-09 06:22:53,797 [Worker-4] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2018-03-13 04:12:06,471 [Worker-2] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2018-03-13 09:34:28,599 [Worker-2] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2018-03-15 11:09:46,657 [Worker-2] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2018-03-16 08:40:59,287 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2018-03-16 13:49:21,169 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.

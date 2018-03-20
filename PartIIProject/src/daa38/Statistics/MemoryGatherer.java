@@ -10,7 +10,7 @@ import daa38.Statistics.Auxiliary.SingleMemoryGatherer;
 
 public class MemoryGatherer {
 	
-	private static final boolean GATHERING_QUEENS = true;
+	private static boolean GATHERING_QUEENS = false;
 
 	//adapted from https://stackoverflow.com/questions/636367/executing-a-java-application-in-a-separate-process
     public static void gatherSingleProcess(String lFileIn, String lFileOut, int pVO, int pVS, int pLB) throws IOException, InterruptedException, UnreasonablyLongTimeException {
@@ -57,13 +57,13 @@ public class MemoryGatherer {
 			if (GATHERING_QUEENS)
 			{
 				String lBasePath = "NQueens/CSP";
-				lInstancesGenerated = 100;
+				lInstancesGenerated = 72;
 				Generator.massGenerateNQueensCSPs(lBasePath, lInstancesGenerated, lCSPFilesIn, lCSPFilesOut);
 			}
 			else
 			{
 				String lBasePath = "MapColouring/CSP";
-				lInstancesGenerated = 300;
+				lInstancesGenerated = 100;
 				Generator.massGenerateMapColouringCSPs(lBasePath, lInstancesGenerated, lCSPFilesIn, lCSPFilesOut);
 			}
 			
@@ -77,7 +77,7 @@ public class MemoryGatherer {
 					}
 			
 			
-			long lTimeBudget = 1000000000L;//in nanoseconds. 1 sec
+			long lTimeBudget = 10000000000L;//in nanoseconds. 10 sec
 			
 			boolean lNeedAnotherTurn = true;
 			while (lNeedAnotherTurn)
@@ -87,6 +87,9 @@ public class MemoryGatherer {
 				for (int lVO = 0; lVO <= 2; lVO++)
 					for (int lVS = 0; lVS <= 4; lVS++)
 						for (int lLB = 0; lLB <= 2; lLB++)
+						{
+				            int value = lVO*100+lVS*10+lLB;
+				            //if ((value==0)||(value==111)||(value==122)||(value==231)||(value==242))
 							if (lIndex[lVO][lVS][lLB]<lInstancesGenerated)
 							{
 								System.out.println("Running "+lVO+" "+lVS+" "+lLB+" on lIndex "+lIndex[lVO][lVS][lLB]+". ");
@@ -111,7 +114,10 @@ public class MemoryGatherer {
 								//System.out.println("Next index is "+lIndex[lVO][lVS][lLB]);
 								lNeedAnotherTurn = true;
 							}
+						}
 			}
+			
+			GATHERING_QUEENS = !GATHERING_QUEENS;
 		}
 
 	}

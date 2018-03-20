@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"org.openjdk.jol.datamodel"},{"l":"org.openjdk.jol.heap"},{"l":"org.openjdk.jol.info"},{"l":"org.openjdk.jol.layouters"},{"l":"org.openjdk.jol.util"},{"l":"org.openjdk.jol.vm"},{"l":"org.openjdk.jol.vm.sa"}]

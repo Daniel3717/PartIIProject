@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: org.openjdk.jol.layouters.LayouterInvariantsTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 122.792 sec

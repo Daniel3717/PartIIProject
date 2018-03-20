@@ -1,8 +1,8 @@
 package daa38.CSP.Auxiliary;
 
 public class PairInts {
-	private final int first;
-	private final int second;
+	private final Integer first;
+	private final Integer second;
 	
 	public PairInts(int pF,int pS)
 	{
